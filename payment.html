@@ -35,9 +35,7 @@
             <div class="flex justify-between items-center h-16">
                 <!-- Logo -->
                 <div class="flex items-center space-x-3">
-                    <div class="flex items-center justify-center w-10 h-10 bg-red-cross-blue rounded-full">
-                        <i class="fas fa-heart text-white text-lg"></i>
-                    </div>
+                    <img src="https://redcross.org.ph/wp-content/themes/yootheme/cache/Logo-2x2-1-03f043e8.png" alt="Red Cross Philippines Logo" class="w-10 h-10">
                     <span class="text-xl font-bold text-red-cross-blue">
                         Red Cross Philippines
                     </span>
@@ -53,9 +51,6 @@
                     </a>
                     <a href="register.html" class="text-gray-600 hover:text-red-cross-blue hover:bg-gray-100 px-3 py-2 rounded-md text-sm font-medium transition-colors duration-200">
                         Register
-                    </a>
-                    <a href="payment.html" class="bg-red-cross-light-blue text-red-cross-blue px-3 py-2 rounded-md text-sm font-medium transition-colors duration-200">
-                        Payment
                     </a>
                 </div>
 
@@ -166,7 +161,7 @@
                                             class="sr-only"
                                         />
                                         <div id="gcashMethod" class="p-4 border-2 border-gray-300 rounded-lg text-center transition-all duration-200 hover:border-gray-400">
-                                            <i class="fas fa-mobile-alt text-2xl text-red-cross-blue mb-2"></i>
+                                            <i class="fas fa-mobile-alt text-2xl text-blue-600 mb-2"></i>
                                             <div class="text-sm font-medium">GCash</div>
                                         </div>
                                     </label>
@@ -175,12 +170,12 @@
                                         <input
                                             type="radio"
                                             name="paymentMethod"
-                                            value="paymaya"
+                                            value="maya"
                                             class="sr-only"
                                         />
-                                        <div id="paymayaMethod" class="p-4 border-2 border-gray-300 rounded-lg text-center transition-all duration-200 hover:border-gray-400">
-                                            <i class="fas fa-wallet text-2xl text-red-cross-blue mb-2"></i>
-                                            <div class="text-sm font-medium">PayMaya</div>
+                                        <div id="mayaMethod" class="p-4 border-2 border-gray-300 rounded-lg text-center transition-all duration-200 hover:border-gray-400">
+                                            <i class="fas fa-wallet text-2xl text-green-600 mb-2"></i>
+                                            <div class="text-sm font-medium">Maya</div>
                                         </div>
                                     </label>
 
@@ -192,7 +187,7 @@
                                             class="sr-only"
                                         />
                                         <div id="bankMethod" class="p-4 border-2 border-gray-300 rounded-lg text-center transition-all duration-200 hover:border-gray-400">
-                                            <i class="fas fa-university text-2xl text-red-cross-blue mb-2"></i>
+                                            <i class="fas fa-university text-2xl text-gray-700 mb-2"></i>
                                             <div class="text-sm font-medium">Bank Transfer</div>
                                         </div>
                                     </label>
@@ -257,6 +252,99 @@
                                 </div>
                             </div>
 
+                            <!-- GCash Details -->
+                            <div id="gcashDetails" class="space-y-6 hidden">
+                                <h3 class="text-lg font-semibold text-gray-800">GCash Payment</h3>
+                                
+                                <div class="p-4 bg-blue-50 border border-blue-200 rounded-lg">
+                                    <div class="flex items-center space-x-3 mb-3">
+                                        <i class="fas fa-mobile-alt text-blue-600 text-xl"></i>
+                                        <span class="font-semibold text-blue-800">GCash Payment Instructions</span>
+                                    </div>
+                                    <ol class="text-sm text-gray-700 space-y-2">
+                                        <li>1. Open your GCash app</li>
+                                        <li>2. Go to "Pay Bills" → "Government" → "Red Cross Philippines"</li>
+                                        <li>3. Enter your membership number (will be provided after registration)</li>
+                                        <li>4. Enter amount: ₱500.00</li>
+                                        <li>5. Complete the payment</li>
+                                    </ol>
+                                </div>
+                                
+                                <div>
+                                    <label for="gcashNumber" class="form-label">GCash Mobile Number</label>
+                                    <input
+                                        type="tel"
+                                        id="gcashNumber"
+                                        name="gcashNumber"
+                                        class="form-input"
+                                        placeholder="+63 9XX XXX XXXX"
+                                    />
+                                    <p id="gcashNumberError" class="form-error hidden"></p>
+                                </div>
+                            </div>
+
+                            <!-- Maya Details -->
+                            <div id="mayaDetails" class="space-y-6 hidden">
+                                <h3 class="text-lg font-semibold text-gray-800">Maya Payment</h3>
+                                
+                                <div class="p-4 bg-green-50 border border-green-200 rounded-lg">
+                                    <div class="flex items-center space-x-3 mb-3">
+                                        <i class="fas fa-wallet text-green-600 text-xl"></i>
+                                        <span class="font-semibold text-green-800">Maya Payment Instructions</span>
+                                    </div>
+                                    <ol class="text-sm text-gray-700 space-y-2">
+                                        <li>1. Open your Maya app</li>
+                                        <li>2. Go to "Pay Bills" → "Government" → "Red Cross Philippines"</li>
+                                        <li>3. Enter your membership number (will be provided after registration)</li>
+                                        <li>4. Enter amount: ₱500.00</li>
+                                        <li>5. Complete the payment</li>
+                                    </ol>
+                                </div>
+                                
+                                <div>
+                                    <label for="mayaNumber" class="form-label">Maya Mobile Number</label>
+                                    <input
+                                        type="tel"
+                                        id="mayaNumber"
+                                        name="mayaNumber"
+                                        class="form-input"
+                                        placeholder="+63 9XX XXX XXXX"
+                                    />
+                                    <p id="mayaNumberError" class="form-error hidden"></p>
+                                </div>
+                            </div>
+
+                            <!-- Bank Transfer Details -->
+                            <div id="bankDetails" class="space-y-6 hidden">
+                                <h3 class="text-lg font-semibold text-gray-800">Bank Transfer</h3>
+                                
+                                <div class="p-4 bg-gray-50 border border-gray-200 rounded-lg">
+                                    <div class="flex items-center space-x-3 mb-3">
+                                        <i class="fas fa-university text-gray-700 text-xl"></i>
+                                        <span class="font-semibold text-gray-800">Bank Transfer Instructions</span>
+                                    </div>
+                                    <div class="text-sm text-gray-700 space-y-2">
+                                        <p><strong>Account Name:</strong> Philippine Red Cross</p>
+                                        <p><strong>Account Number:</strong> 1234567890</p>
+                                        <p><strong>Bank:</strong> BDO (Banco de Oro)</p>
+                                        <p><strong>Amount:</strong> ₱500.00</p>
+                                        <p><strong>Reference:</strong> Your membership number (will be provided)</p>
+                                    </div>
+                                </div>
+                                
+                                <div>
+                                    <label for="bankReference" class="form-label">Transaction Reference Number</label>
+                                    <input
+                                        type="text"
+                                        id="bankReference"
+                                        name="bankReference"
+                                        class="form-input"
+                                        placeholder="Enter your bank transaction reference number"
+                                    />
+                                    <p id="bankReferenceError" class="form-error hidden"></p>
+                                </div>
+                            </div>
+
                             <!-- Security Features -->
                             <div class="p-6 bg-red-cross-light-blue rounded-lg">
                                 <h3 class="font-semibold text-red-cross-blue mb-4">Secure Payment Processing</h3>
@@ -313,7 +401,7 @@
                             <button
                                 type="submit"
                                 id="paymentBtn"
-                                class="btn-primary w-full"
+                                class="bg-blue-600 text-white px-6 py-3 rounded-lg font-semibold hover:bg-blue-700 transition-all duration-300 transform hover:-translate-y-1 hover:shadow-lg w-full"
                             >
                                 <i class="fas fa-credit-card mr-2"></i>
                                 Finalize Payment

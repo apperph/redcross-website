@@ -10,9 +10,13 @@ export default defineConfig({
   build: {
     rollupOptions: {
       // FIX: Explicitly mark Firebase modular packages as external to resolve 
-      // Rollup import errors. This pattern ensures modular imports are handled correctly.
+      // Rollup import errors. We are using an array of module IDs for better 
+      // compatibility with some Vercel/Vite setups.
       external: [
-        /^firebase\/.*/
+        'firebase/app',
+        'firebase/auth',
+        'firebase/firestore',
+        /^firebase\/.*/ // Keep the regex as a fallback
       ]
     },
     // Set a commonjs format fallback in case Vercel's node version requires it.

@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 <!doctype html>
 <html lang="en">
   <head>
@@ -14,4 +15,211 @@
     -->
     <script type="module" src="/src/main.jsx"></script>
   </body>
+=======
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Red Cross Philippines - Save Lives. Join the Red Cross.</title>
+    <meta name="description" content="Join the Philippine Red Cross and be part of a humanitarian movement that saves lives and builds resilient communities across the Philippines.">
+    <link rel="icon" type="image/x-icon" href="favicon.ico">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        'red-cross-blue': '#002888',
+                        'red-cross-red': '#E3000E',
+                        'red-cross-light-blue': '#e6f0ff',
+                        'red-cross-secondary-blue': '#1a4ba8'
+                    },
+                    fontFamily: {
+                        'inter': ['Inter', 'sans-serif']
+                    }
+                }
+            }
+        }
+    </script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body class="min-h-screen bg-gray-50">
+    <!-- Navigation -->
+    <nav class="bg-white shadow-lg fixed top-0 left-0 right-0 z-50">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between items-center h-16">
+                <!-- Logo -->
+                <div class="flex items-center space-x-3">
+                    <div class="flex items-center justify-center w-10 h-10 bg-red-cross-blue rounded-full">
+                        <i class="fas fa-heart text-white text-lg"></i>
+                    </div>
+                    <span class="text-xl font-bold text-red-cross-blue">
+                        Red Cross Philippines
+                    </span>
+                </div>
+
+                <!-- Navigation Links -->
+                <div class="hidden md:flex space-x-8">
+                    <a href="index.html" class="bg-red-cross-light-blue text-red-cross-blue px-3 py-2 rounded-md text-sm font-medium transition-colors duration-200">
+                        Home
+                    </a>
+                    <a href="login.html" class="text-gray-600 hover:text-red-cross-blue hover:bg-gray-100 px-3 py-2 rounded-md text-sm font-medium transition-colors duration-200">
+                        Login
+                    </a>
+                    <a href="register.html" class="text-gray-600 hover:text-red-cross-blue hover:bg-gray-100 px-3 py-2 rounded-md text-sm font-medium transition-colors duration-200">
+                        Register
+                    </a>
+                    <a href="payment.html" class="text-gray-600 hover:text-red-cross-blue hover:bg-gray-100 px-3 py-2 rounded-md text-sm font-medium transition-colors duration-200">
+                        Payment
+                    </a>
+                </div>
+
+                <!-- Mobile menu button -->
+                <div class="md:hidden">
+                    <button type="button" class="text-gray-600 hover:text-red-cross-blue focus:outline-none focus:text-red-cross-blue" onclick="toggleMobileMenu()">
+                        <i class="fas fa-bars text-xl"></i>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Main Content -->
+    <div class="pt-16">
+        <!-- Hero Banner -->
+        <section class="hero-gradient min-h-screen flex items-center justify-center relative overflow-hidden">
+            <div class="absolute inset-0 bg-gradient-to-br from-red-cross-light-blue/50 to-white/50"></div>
+            <div class="relative z-10 text-center max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
+                <h1 class="text-4xl md:text-6xl font-bold text-gray-800 mb-6 leading-tight">
+                    Save Lives. Join the Red Cross.
+                </h1>
+                <p class="text-lg md:text-xl text-gray-700 mb-8 max-w-3xl mx-auto leading-relaxed">
+                    We take pride in urging all Filipinos to take part in the heroism of the Philippine Red Cross 
+                    by becoming a full-fledged member, volunteer, or donor.
+                </p>
+                <div class="flex flex-col sm:flex-row gap-4 justify-center">
+                    <a href="register.html" class="bg-red-cross-red text-white px-8 py-4 rounded-lg text-lg font-semibold hover:bg-red-700 transition-all duration-300 transform hover:-translate-y-1 hover:shadow-xl">
+                        JOIN US
+                    </a>
+                    <a href="login.html" class="bg-white text-red-cross-blue px-8 py-4 rounded-lg text-lg font-semibold border-2 border-red-cross-blue hover:bg-red-cross-light-blue transition-all duration-300">
+                        LOGIN
+                    </a>
+                </div>
+            </div>
+        </section>
+
+        <!-- Features Section -->
+        <section class="py-16 bg-white">
+            <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+                <div class="text-center mb-12">
+                    <h2 class="text-3xl md:text-4xl font-bold text-gray-800 mb-4">
+                        Why Join the Red Cross?
+                    </h2>
+                    <p class="text-lg text-gray-600 max-w-2xl mx-auto">
+                        Be part of a humanitarian movement that saves lives and builds resilient communities across the Philippines.
+                    </p>
+                </div>
+
+                <div class="grid md:grid-cols-3 gap-8">
+                    <div class="text-center p-6">
+                        <div class="w-16 h-16 bg-red-cross-light-blue rounded-full flex items-center justify-center mx-auto mb-4">
+                            <i class="fas fa-heart text-red-cross-blue text-2xl"></i>
+                        </div>
+                        <h3 class="text-xl font-semibold text-gray-800 mb-3">Save Lives</h3>
+                        <p class="text-gray-600">
+                            Join emergency response teams and provide critical aid during disasters and emergencies.
+                        </p>
+                    </div>
+
+                    <div class="text-center p-6">
+                        <div class="w-16 h-16 bg-red-cross-light-blue rounded-full flex items-center justify-center mx-auto mb-4">
+                            <i class="fas fa-users text-red-cross-blue text-2xl"></i>
+                        </div>
+                        <h3 class="text-xl font-semibold text-gray-800 mb-3">Build Community</h3>
+                        <p class="text-gray-600">
+                            Connect with like-minded individuals and contribute to building resilient communities.
+                        </p>
+                    </div>
+
+                    <div class="text-center p-6">
+                        <div class="w-16 h-16 bg-red-cross-light-blue rounded-full flex items-center justify-center mx-auto mb-4">
+                            <i class="fas fa-graduation-cap text-red-cross-blue text-2xl"></i>
+                        </div>
+                        <h3 class="text-xl font-semibold text-gray-800 mb-3">Learn & Grow</h3>
+                        <p class="text-gray-600">
+                            Gain valuable skills in first aid, disaster preparedness, and humanitarian work.
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Security Features -->
+        <section class="py-16 bg-gray-50">
+            <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
+                <div class="text-center mb-12">
+                    <h2 class="text-3xl font-bold text-gray-800 mb-4">
+                        Your Data is Protected
+                    </h2>
+                    <p class="text-lg text-gray-600">
+                        We use industry-leading security measures to protect your personal information.
+                    </p>
+                </div>
+
+                <div class="grid md:grid-cols-2 gap-6">
+                    <div class="flex items-start space-x-3">
+                        <i class="fas fa-shield-alt text-red-cross-blue text-xl mt-1"></i>
+                        <div>
+                            <h3 class="font-semibold text-gray-800 mb-1">256-bit SSL Encryption</h3>
+                            <p class="text-gray-600 text-sm">All personal data is encrypted and protected</p>
+                        </div>
+                    </div>
+
+                    <div class="flex items-start space-x-3">
+                        <i class="fas fa-lock text-red-cross-blue text-xl mt-1"></i>
+                        <div>
+                            <h3 class="font-semibold text-gray-800 mb-1">Data Privacy Act Compliant</h3>
+                            <p class="text-gray-600 text-sm">Compliant with Philippine Data Privacy Act (RA 10173)</p>
+                        </div>
+                    </div>
+
+                    <div class="flex items-start space-x-3">
+                        <i class="fas fa-user-shield text-red-cross-blue text-xl mt-1"></i>
+                        <div>
+                            <h3 class="font-semibold text-gray-800 mb-1">Zero Data Sharing</h3>
+                            <p class="text-gray-600 text-sm">No data sharing with third parties without consent</p>
+                        </div>
+                    </div>
+
+                    <div class="flex items-start space-x-3">
+                        <i class="fas fa-server text-red-cross-blue text-xl mt-1"></i>
+                        <div>
+                            <h3 class="font-semibold text-gray-800 mb-1">24/7 Monitoring</h3>
+                            <p class="text-gray-600 text-sm">Secure servers with continuous monitoring</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- CTA Section -->
+        <section class="py-16 bg-red-cross-blue text-white">
+            <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+                <h2 class="text-3xl font-bold mb-4">Ready to Make a Difference?</h2>
+                <p class="text-xl mb-8 opacity-90">
+                    Join thousands of Filipinos who are already making a positive impact in their communities.
+                </p>
+                <a href="register.html" class="bg-red-cross-red text-white px-8 py-4 rounded-lg text-lg font-semibold hover:bg-red-700 transition-all duration-300 inline-block">
+                    Start Your Journey Today
+                </a>
+            </div>
+        </section>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+>>>>>>> e64c1cf (Prepare to sync with remote - updated static site)
 </html>

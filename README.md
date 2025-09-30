@@ -1,208 +1,146 @@
+<<<<<<< HEAD
 # Red Cross Philippines
 
 A website for Red Cross Philippines user registration system, built with Vite, Tailwind CSS, and featuring QR code scanning capabilities for National ID processing.
+=======
+# Red Cross Philippines - Static Website
 
-## 🚀 Features
+A clean, production-ready static website for the Red Cross Philippines user registration system.
+>>>>>>> e64c1cf (Prepare to sync with remote - updated static site)
 
-- **Home Page** (`/`) - Welcome section with hero banner and feature highlights
-- **Login Page** (`/login`) - Secure login form with email/password authentication
-- **Registration Page** (`/register`) - Two registration options:
-  - **National ID QR Code Scanning** - Automatically extract and fill personal information
-  - **Manual Input** - Traditional form entry for all personal details
-- **Payment Page** (`/payment`) - Secure payment processing with multiple payment methods
-- **Responsive Design** - Mobile-first approach with Tailwind CSS
-- **Modern UI** - Clean, accessible interface with Red Cross branding
+## 🚀 Quick Start
 
-## 🛠️ Technologies Used
+This is a static website that requires no build process. Simply open `index.html` in your browser or deploy to any static hosting service.
 
-- **React 18** - Modern React with hooks
-- **Vite** - Fast build tool and development server
-- **React Router DOM** - Client-side routing
-- **Tailwind CSS** - Utility-first CSS framework
-- **QR Scanner** - QR code scanning functionality
-- **Font Awesome** - Icons and visual elements
-
-## 📁 Project Structure
+## 📁 File Structure
 
 ```
-/
-├── public/
-│   ├── index.html
-│   └── manifest.json
-├── src/
-│   ├── components/          # Reusable UI components
-│   │   ├── Navbar.jsx
-│   │   └── QRCodeScanner.jsx
-│   ├── layouts/             # Shared layouts
-│   │   └── MainLayout.jsx
-│   ├── pages/               # Route-based pages
-│   │   ├── index.jsx        # Home page (/)
-│   │   ├── login.jsx        # Login page (/login)
-│   │   ├── register.jsx     # Registration page (/register)
-│   │   └── payment.jsx      # Payment page (/payment)
-│   ├── hooks/               # Custom React hooks
-│   │   ├── useQRCodeScanner.js
-│   │   └── useFormValidation.js
-│   ├── utils/               # Helper functions
-│   │   ├── parseQRCode.js
-│   │   └── formValidators.js
-│   ├── styles/              # Additional CSS if needed
-│   ├── App.js               # Main app component
-│   ├── main.jsx             # React entry point
-│   └── index.css            # Global styles and Tailwind imports
-├── package.json
-├── tailwind.config.js
-├── postcss.config.js
-├── vite.config.js
-├── vercel.json              # Vercel deployment config
-└── README.md
+├── index.html          # Home page
+├── login.html          # Login page  
+├── register.html       # Registration page
+├── payment.html        # Payment page
+├── style.css           # Custom styles
+├── script.js           # JavaScript functionality
+├── favicon.ico         # Site icon
+└── README.md           # This file
 ```
 
-## 🚀 Getting Started
+## 🎯 Features
 
-### Prerequisites
+- **Responsive Design**: Mobile-first approach with Tailwind CSS
+- **Form Validation**: Real-time validation with error handling
+- **Interactive Elements**: QR scanner simulation, payment methods
+- **Security Features**: SSL indicators, privacy compliance notices
+- **No Dependencies**: Pure HTML, CSS, and JavaScript
+- **Fast Loading**: CDN-delivered resources, optimized performance
 
-- Node.js (version 16 or higher)
-- npm or yarn package manager
+## 🛠 Technologies Used
 
-### Installation
+- **HTML5**: Semantic markup
+- **Tailwind CSS**: Utility-first CSS framework (via CDN)
+- **Vanilla JavaScript**: No frameworks required
+- **Font Awesome**: Icons (via CDN)
+- **Google Fonts**: Inter font family
 
-1. **Clone the repository:**
-   ```bash
-   git clone <your-repo-url>
-   cd red-cross-ph
-   ```
+## 📱 Pages
 
-2. **Install dependencies:**
-   ```bash
-   npm install
-   ```
+### Home Page (`index.html`)
+- Hero section with call-to-action
+- Features showcase
+- Security information
+- Community benefits
 
-3. **Start the development server:**
-   ```bash
-   npm run dev
-   ```
+### Login Page (`login.html`)
+- Secure login form
+- Form validation
+- Security features display
+- Registration teaser
 
-4. **Open your browser:**
-   Navigate to `http://localhost:3000` to view the application.
+### Registration Page (`register.html`)
+- Multi-step process indicator
+- QR code scanning simulation
+- Comprehensive form with validation
+- Test data population
+- Security compliance notices
 
-### Available Scripts
-
-- `npm run dev` - Start development server with hot reload
-- `npm run build` - Build the app for production
-- `npm run preview` - Preview production build locally
-- `npm start` - Start production server (alias for preview)
-
-## 🎯 Key Features
-
-### QR Code Scanning
-- Integrated QR scanner for National ID processing
-- Automatic form field population from scanned data
-- Camera switching between front and back cameras
-- Fallback to manual input if scanning fails
-
-### Form Validation
-- Real-time validation for all form fields
-- Email format validation
-- Philippine mobile number format validation
-- Age restrictions (18+ for membership)
-- Required field validation
-
-### Payment Processing
-- Multiple payment methods (Credit/Debit, GCash, PayMaya, Bank Transfer)
-- Card number formatting and validation
-- Secure payment information handling
-- PCI-DSS compliance messaging
-
-### Responsive Design
-- Mobile-first approach
-- Responsive navigation
-- Adaptive form layouts
-- Touch-friendly interface
-
-## 🔧 Development
-
-### Adding New Pages
-1. Create a new component in `src/pages/`
-2. Add the route to `src/App.js`
-3. Update the navigation in `src/components/Navbar.jsx`
-
-### Styling
-- Uses Tailwind CSS utility classes
-- Custom components defined in `src/index.css`
-- Red Cross brand colors configured in `tailwind.config.js`
-
-### QR Code Integration
-- Uses `qr-scanner` library
-- Handles both JSON and string QR code formats
-- Graceful fallback to manual input
+### Payment Page (`payment.html`)
+- Multiple payment methods
+- Card number formatting
+- Payment summary
+- Security processing information
 
 ## 🚀 Deployment
 
-### Vercel Deployment
+### Vercel (Recommended)
+1. Install Vercel CLI: `npm i -g vercel`
+2. Run: `vercel --prod`
 
-1. **Connect to Vercel:**
-   - Push your code to GitHub
-   - Connect your GitHub repository to Vercel
-   - Vercel will automatically detect the Vite configuration
+### Netlify
+1. Drag and drop all files to Netlify
+2. Your site is live!
 
-2. **Environment Variables (if needed):**
-   - Add any required environment variables in Vercel dashboard
-   - The app works without additional environment variables
+### GitHub Pages
+1. Upload files to a GitHub repository
+2. Enable Pages in repository settings
+3. Select source: Deploy from a branch
 
-3. **Deploy:**
-   - Vercel will automatically build and deploy your app
-   - Your app will be available at `https://your-app.vercel.app`
+### Any Static Host
+- Upload all files to your hosting service
+- No build process required
+- Works with any static file server
 
-### Manual Deployment
+## 🎨 Customization
 
-1. **Build the project:**
-   ```bash
-   npm run build
-   ```
+### Colors
+Red Cross brand colors are defined in the Tailwind config:
+- Primary Blue: `#002888`
+- Red: `#E3000E` 
+- Light Blue: `#e6f0ff`
+- Secondary Blue: `#1a4ba8`
 
-2. **Deploy the `dist` folder:**
-   - Upload the contents of the `dist` folder to your hosting provider
-   - Configure your server to serve `index.html` for all routes (SPA routing)
+### Content
+- Edit HTML files to modify content
+- Update `style.css` for custom styles
+- Modify `script.js` for functionality changes
 
-## 🔒 Security Features
+## 📊 Performance
 
-- SSL encryption messaging
-- Data Privacy Act compliance
-- Secure payment processing
-- No data storage warnings
-- Real-time form validation
+- **No Build Process**: Instant deployment
+- **CDN Resources**: Fast loading from global CDNs
+- **Optimized Images**: Compressed and responsive
+- **Minimal JavaScript**: Lightweight and fast
+- **Mobile Optimized**: Touch-friendly interface
+
+## 🔒 Security
+
+- **SSL Indicators**: Visual security assurance
+- **Privacy Compliance**: Data protection notices
+- **Form Validation**: Client-side validation
+- **Secure Headers**: Security headers for production
 
 ## 🌐 Browser Support
 
-- Chrome (latest)
-- Firefox (latest)
-- Safari (latest)
-- Edge (latest)
+- Chrome 60+
+- Firefox 60+
+- Safari 12+
+- Edge 79+
 
-## 📱 Mobile Support
+## 📞 Support
 
-- Responsive design for all screen sizes
-- Touch-friendly interface
-- Camera access for QR scanning
-- Mobile-optimized forms
-
-## 🤝 Contributing
-
-1. Fork the repository
-2. Create a feature branch (`git checkout -b feature/amazing-feature`)
-3. Commit your changes (`git commit -m 'Add some amazing feature'`)
-4. Push to the branch (`git push origin feature/amazing-feature`)
-5. Open a Pull Request
+For technical issues or questions:
+- Check browser console for errors
+- Verify CDN resources are loading
+- Test on different devices
+- Contact: support@redcross.org.ph
 
 ## 📄 License
 
-This project is for educational and demonstration purposes.
-
-## 🆘 Support
-
-For support, email support@redcross.org.ph or create an issue in the GitHub repository.
+This project is for the Philippine Red Cross and follows their branding guidelines.
 
 ---
 
+<<<<<<< HEAD
 **Red Cross Philippines** - Saving Lives, Building Communities
+=======
+**Ready to deploy!** 🚀
+>>>>>>> e64c1cf (Prepare to sync with remote - updated static site)

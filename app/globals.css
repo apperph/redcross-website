@@ -1,0 +1,16 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  --brand-blue: #002888;
+  --brand-red: #E3000E;
+}
+
+.btn-primary {
+  @apply px-5 py-2 rounded-md text-white bg-[var(--brand-blue)] hover:opacity-95;
+}
+
+.btn-danger {
+  @apply px-5 py-2 rounded-md text-white bg-[var(--brand-red)];
+}

@@ -1,7 +1,7 @@
 {
   "name": "red-cross-ph-react",
   "version": "1.0.0",
-  "description": "Red Cross Philippines User Registration System - React Application",
+  "description": "Red Cross Philippines User Registration",
   "type": "module",
   "scripts": {
     "dev": "vite",
@@ -13,7 +13,8 @@
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
     "react-router-dom": "^6.8.1",
-    "qr-scanner": "^1.4.2"
+    "qr-scanner": "^1.4.2",
+    "firebase": "^9.23.0"
   },
   "devDependencies": {
     "@types/react": "^18.2.15",

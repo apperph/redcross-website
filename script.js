@@ -115,8 +115,10 @@ const Navigation = {
 
     // Toggle mobile menu
     toggleMobileMenu: () => {
-        // Mobile menu functionality would go here
-        console.log('Mobile menu toggled');
+        const mobileMenu = document.getElementById('mobileMenu');
+        if (mobileMenu) {
+            mobileMenu.classList.toggle('hidden');
+        }
     }
 };
 

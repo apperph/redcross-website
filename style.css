@@ -10,16 +10,150 @@ body {
     @apply bg-red-cross-blue text-white px-6 py-3 rounded-lg font-semibold hover:bg-red-cross-secondary-blue transition-all duration-300 transform hover:-translate-y-1 hover:shadow-lg;
 }
 
+/* Form Grid Layout (Strict Two-Column) */
+.form-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr; /* Two equal-width columns */
+    gap: 20px 30px; /* Vertical and horizontal spacing */
+    margin-bottom: 20px;
+}
+
+/* Full-width Field (For Address and Occupation) */
+.full-width {
+    grid-column: 1 / -1; /* Spans across both columns */
+}
+
+/* Field Styling (Top-Aligned Labels) */
+.field-group {
+    display: flex;
+    flex-direction: column; /* Stacks label above input */
+}
+
+.field-group label {
+    font-weight: 600;
+    margin-bottom: 5px;
+    color: #555;
+    font-size: 0.95em;
+}
+
+/* Input/Select/Textarea Styling (Full-Width, Rounded, Colored Border) */
 .form-input {
-    @apply w-full px-4 py-3 border-2 border-gray-300 rounded-lg focus:border-red-cross-blue focus:outline-none focus:ring-2 focus:ring-red-cross-blue/20 transition-all duration-300;
+    width: 100%;
+    padding: 10px 12px;
+    border: 2px solid #f5f7f6; /* UPDATED: New border color */
+    border-radius: 8px; /* Rounded corners */
+    box-sizing: border-box; /* Includes padding and border in the element's total width and height */
+    font-size: 1em;
+    transition: border-color 0.3s;
+}
+
+.form-input:focus {
+    border-color: #007bff; /* Darker blue on focus (kept for user feedback) */
+    outline: none;
+}
+
+/* Placeholder and option styling for uniform color */
+.form-input::placeholder {
+    color: #9da2ae !important;
+}
+
+.form-input option:disabled {
+    color: #9da2ae !important;
+}
+
+.form-input option {
+    color: #333;
+}
+
+/* Specific styling for select dropdowns */
+select.form-input {
+    color: #9da2ae;
+}
+
+select.form-input:focus,
+select.form-input:valid {
+    color: #333;
+}
+
+/* Date input styling */
+input[type="date"].form-input {
+    color: #9da2ae;
+}
+
+input[type="date"].form-input::-webkit-datetime-edit-text,
+input[type="date"].form-input::-webkit-datetime-edit-month-field,
+input[type="date"].form-input::-webkit-datetime-edit-day-field,
+input[type="date"].form-input::-webkit-datetime-edit-year-field {
+    color: #9da2ae;
+}
+
+/* When date has value, make it black */
+input[type="date"].form-input:valid {
+    color: #000000 !important;
+}
+
+input[type="date"].form-input:valid::-webkit-datetime-edit-text,
+input[type="date"].form-input:valid::-webkit-datetime-edit-month-field,
+input[type="date"].form-input:valid::-webkit-datetime-edit-day-field,
+input[type="date"].form-input:valid::-webkit-datetime-edit-year-field {
+    color: #000000 !important;
+}
+
+/* Specific styling for the Address textarea */
+.field-group textarea {
+    resize: vertical;
+    min-height: 100px;
+}
+
+/* Styling for the date input and icon (to mimic the visual) */
+.date-input-group {
+    display: flex;
+    align-items: center;
+}
+.date-input-group input {
+    border-right: none;
+    border-top-right-radius: 0;
+    border-bottom-right-radius: 0;
+    flex-grow: 1;
+}
+.date-icon {
+    padding: 10px 12px;
+    border: 2px solid #f5f7f6; /* UPDATED: New border color */
+    border-left: none;
+    border-top-right-radius: 8px;
+    border-bottom-right-radius: 8px;
+    background-color: #f8f8f8;
+    color: #555; /* Changed icon color to a darker grey for visibility */
+}
+
+/* Section Header Styling */
+.section-header {
+    font-size: 1.3em;
+    font-weight: bold;
+    color: #333;
+    margin-top: 25px;
+    margin-bottom: 20px;
+    padding-left: 10px;
+    border-left: 5px solid #cc0000; /* Red line on the left */
+}
+
+/* Required Field Styling (Red Asterisk) */
+.required::after {
+    content: ' *';
+    color: #cc0000; /* Bright red color for the asterisk */
+    font-weight: bold;
 }
 
 .form-label {
     @apply block text-sm font-medium text-gray-700 mb-2;
 }
 
+.form-label .required-asterisk {
+    @apply text-red-500;
+}
+
 .form-error {
-    @apply text-red-500 text-sm mt-1;
+    @apply text-gray-600 text-xs mt-1;
 }
 
 .card {

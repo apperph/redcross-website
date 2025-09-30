@@ -1,6 +1,6 @@
-# Red Cross Philippines - React Application
+# Red Cross Philippines
 
-A modern React.js application for the Red Cross Philippines user registration system, built with Vite, Tailwind CSS, and featuring QR code scanning capabilities for National ID processing.
+A website for Red Cross Philippines user registration system, built with Vite, Tailwind CSS, and featuring QR code scanning capabilities for National ID processing.
 
 ## 🚀 Features
 

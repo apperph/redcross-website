@@ -215,7 +215,7 @@ const Registration = {
         const errors = {};
         
         // Required fields validation
-        const requiredFields = ['fullName', 'nationalIdNumber', 'dateOfBirth', 'address', 'surname', 'firstName', 'age', 'sex', 'birthdate', 'mobile', 'email', 'bloodType'];
+        const requiredFields = ['surname', 'firstName', 'age', 'sex', 'birthdate', 'address', 'mobile', 'email', 'bloodType'];
         
         requiredFields.forEach(field => {
             if (!formData[field]) {
@@ -246,16 +246,13 @@ const Registration = {
         e.preventDefault();
         
         const formData = {
-            fullName: document.getElementById('fullName').value,
-            nationalIdNumber: document.getElementById('nationalIdNumber').value,
-            dateOfBirth: document.getElementById('dateOfBirth').value,
-            address: document.getElementById('address').value,
             surname: document.getElementById('surname').value,
             firstName: document.getElementById('firstName').value,
             middleName: document.getElementById('middleName').value,
             age: document.getElementById('age').value,
             sex: document.getElementById('sex').value,
             birthdate: document.getElementById('birthdate').value,
+            address: document.getElementById('address').value,
             mobile: document.getElementById('mobile').value,
             email: document.getElementById('email').value,
             bloodType: document.getElementById('bloodType').value,
@@ -279,8 +276,9 @@ const Registration = {
             // Simulate API call
             await new Promise(resolve => setTimeout(resolve, 2000));
             
-            // Show success message
-            alert('Registration successful! Proceeding to submission...');
+            // Show success message and redirect to payment
+            alert('Registration successful! Redirecting to payment...');
+            window.location.href = 'payment.html';
             
         } catch (error) {
             alert('Registration failed. Please try again.');
@@ -289,39 +287,6 @@ const Registration = {
         }
     },
 
-    // Fill test data for QR code simulation
-    fillTestData: () => {
-        const testData = {
-            fullName: "Juan Carlos Dela Cruz",
-            dateOfBirth: "1990-05-15",
-            address: "123 Main Street, Barangay San Antonio, Quezon City, Metro Manila",
-            nationalIdNumber: "1234-5678-9012-3456",
-            surname: "Dela Cruz",
-            firstName: "Juan Carlos",
-            middleName: "Santos",
-            age: "34",
-            sex: "male",
-            birthdate: "1990-05-15",
-            mobile: "+63 912 345 6789",
-            email: "juan.delacruz@email.com"
-        };
-        
-        Object.keys(testData).forEach(field => {
-            const element = document.getElementById(field);
-            if (element) {
-                element.value = testData[field];
-            }
-        });
-        
-        // Show success message
-        const successMessage = document.getElementById('qrSuccessMessage');
-        if (successMessage) {
-            successMessage.classList.remove('hidden');
-            setTimeout(() => {
-                successMessage.classList.add('hidden');
-            }, 5000);
-        }
-    },
 
     // Open QR scanner modal
     openQRScanner: () => {
@@ -390,11 +355,25 @@ const Payment = {
             selectedMethod.className = 'p-4 border-2 border-red-cross-blue bg-red-cross-light-blue rounded-lg text-center transition-all duration-200';
         }
         
-        // Show/hide card details
+        // Hide all payment details first
+        const gcashDetails = document.getElementById('gcashDetails');
+        const mayaDetails = document.getElementById('mayaDetails');
+        const bankDetails = document.getElementById('bankDetails');
+        
+        cardDetails.classList.add('hidden');
+        if (gcashDetails) gcashDetails.classList.add('hidden');
+        if (mayaDetails) mayaDetails.classList.add('hidden');
+        if (bankDetails) bankDetails.classList.add('hidden');
+        
+        // Show the selected payment method details
         if (method === 'card' && cardDetails) {
             cardDetails.classList.remove('hidden');
-        } else if (cardDetails) {
-            cardDetails.classList.add('hidden');
+        } else if (method === 'gcash' && gcashDetails) {
+            gcashDetails.classList.remove('hidden');
+        } else if (method === 'maya' && mayaDetails) {
+            mayaDetails.classList.remove('hidden');
+        } else if (method === 'bank' && bankDetails) {
+            bankDetails.classList.remove('hidden');
         }
     },
 
@@ -469,8 +448,9 @@ const Payment = {
             // Simulate API call
             await new Promise(resolve => setTimeout(resolve, 3000));
             
-            // Show success message
+            // Show success message and redirect to home
             alert('Payment successful! Your membership is now active.');
+            window.location.href = 'index.html';
             
         } catch (error) {
             alert('Payment failed. Please try again.');
@@ -482,7 +462,6 @@ const Payment = {
 
 // Global functions for HTML onclick handlers
 window.toggleMobileMenu = Navigation.toggleMobileMenu;
-window.fillTestData = Registration.fillTestData;
 window.openQRScanner = Registration.openQRScanner;
 window.closeQRScanner = Registration.closeQRScanner;
 window.startQRScanner = Registration.startQRScanner;
@@ -517,6 +496,120 @@ document.addEventListener('DOMContentLoaded', () => {
                 }
             });
         });
+    }
+    
+    // Set uniform color for select dropdowns and date input
+    const selectElements = document.querySelectorAll('select.form-input');
+    selectElements.forEach(select => {
+        select.style.color = '#9da2ae';
+        
+        select.addEventListener('change', function() {
+            if (this.value) {
+                this.style.color = '#333';
+            } else {
+                this.style.color = '#9da2ae';
+            }
+        });
+    });
+    
+    // Add real-time validation for mobile and email
+    const mobileInput = document.getElementById('mobile');
+    const emailInput = document.getElementById('email');
+    
+    if (mobileInput) {
+        mobileInput.addEventListener('input', function() {
+            validateMobile(this);
+        });
+        mobileInput.addEventListener('blur', function() {
+            validateMobile(this);
+        });
+    }
+    
+    if (emailInput) {
+        emailInput.addEventListener('input', function() {
+            validateEmail(this);
+        });
+        emailInput.addEventListener('blur', function() {
+            validateEmail(this);
+        });
+    }
+    
+    function validateMobile(input) {
+        const mobileRegex = /^(\+63|0)?[0-9]{10}$/;
+        const errorElement = document.getElementById('mobileError');
+        
+        if (input.value && !mobileRegex.test(input.value.replace(/\s/g, ''))) {
+            showError(input, errorElement, 'Please enter a valid Philippine mobile number');
+            return false;
+        } else {
+            hideError(input, errorElement);
+            return true;
+        }
+    }
+    
+    function validateEmail(input) {
+        const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+        const errorElement = document.getElementById('emailError');
+        
+        if (input.value && !emailRegex.test(input.value)) {
+            showError(input, errorElement, 'Please enter a valid email address');
+            return false;
+        } else {
+            hideError(input, errorElement);
+            return true;
+        }
+    }
+    
+    function showError(input, errorElement, message) {
+        input.style.borderColor = '#ef4444';
+        if (errorElement) {
+            errorElement.textContent = message;
+            errorElement.classList.remove('hidden');
+            errorElement.style.color = '#6b7280'; // Dark gray color
+            errorElement.style.fontSize = '0.75rem'; // Small text size
+        }
+    }
+    
+    function hideError(input, errorElement) {
+        input.style.borderColor = '#f5f7f6';
+        if (errorElement) {
+            errorElement.classList.add('hidden');
+        }
+    }
+    
+    // Set uniform color for date input
+    const dateInput = document.getElementById('birthdate');
+    if (dateInput) {
+        dateInput.style.color = '#9da2ae';
+        
+        function updateDateColor() {
+            if (dateInput.value) {
+                dateInput.style.color = '#000000';
+                dateInput.style.setProperty('color', '#000000', 'important');
+                
+                // Force webkit elements to be black
+                const style = document.createElement('style');
+                style.textContent = `
+                    #birthdate::-webkit-datetime-edit-text,
+                    #birthdate::-webkit-datetime-edit-month-field,
+                    #birthdate::-webkit-datetime-edit-day-field,
+                    #birthdate::-webkit-datetime-edit-year-field {
+                        color: #000000 !important;
+                    }
+                `;
+                document.head.appendChild(style);
+            } else {
+                dateInput.style.color = '#9da2ae';
+                dateInput.style.setProperty('color', '#9da2ae', 'important');
+            }
+        }
+        
+        dateInput.addEventListener('change', updateDateColor);
+        dateInput.addEventListener('input', updateDateColor);
+        dateInput.addEventListener('blur', updateDateColor);
+        
+        // Initial check
+        updateDateColor();
     }
 });
 

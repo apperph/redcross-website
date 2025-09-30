@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+// === FIX: Explicitly import functions instead of the service path ===
 import { initializeApp } from 'firebase/app';
 import { getAuth, signInWithCustomToken, signInAnonymously } from 'firebase/auth';
 import { getFirestore, collection, addDoc, serverTimestamp } from 'firebase/firestore';

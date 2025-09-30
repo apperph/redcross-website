@@ -1,15 +1,14 @@
 import { defineConfig } from 'vite';
 import react from '@vitejs/plugin-react';
-import path from 'path';
+import { resolve } from 'path';
 
 export default defineConfig({
-  root: '.', // explicitly set root folder
+  root: './', // points to repo root
   plugins: [react()],
   build: {
     outDir: 'dist',
     sourcemap: true,
     rollupOptions: {
-      input: path.resolve(__dirname, 'index.html'), // explicitly set entry point
       output: {
         manualChunks: {
           vendor: ['react', 'react-dom'],
@@ -18,9 +17,5 @@ export default defineConfig({
         }
       }
     }
-  },
-  server: {
-    port: 3000,
-    open: true
   }
 });

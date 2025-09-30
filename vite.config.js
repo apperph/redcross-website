@@ -9,8 +9,11 @@ export default defineConfig({
   // that have complex nested module structures.
   build: {
     rollupOptions: {
-      // We don't need to specify external modules here, but we will ensure 
-      // module resolution is robust.
+      // FIX: Explicitly mark Firebase modular packages as external to resolve 
+      // Rollup import errors. This pattern ensures modular imports are handled correctly.
+      external: [
+        /^firebase\/.*/
+      ]
     },
     // Set a commonjs format fallback in case Vercel's node version requires it.
     commonjsOptions: {

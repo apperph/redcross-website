@@ -1,23 +1,128 @@
 {
   "register_page": {
+    "page_purpose": "Step 1 of 3: Securely collect personal identification information (PII) to initiate your Red Cross membership, volunteer, or donor profile. This is where your journey of heroism begins.",
     "hero_section": {
       "headline": "Save Lives. Join the Red Cross.",
       "sub_headline": "We take pride in urging all Filipinos to take part in the heroism of the Philippine Red Cross by becoming a full-fledged member, volunteer, or donor.",
       "core_cta": "Proceed to Submission (Step 2)"
-    }
+    },
+    "philsys_integration": {
+      "feature_headline": "Streamline KYC: Use Your National ID",
+      "feature_description": "Skip manual entry! Use your **PhilSys National ID (PhilID/ePhilID)** to securely verify your identity and instantly pre-fill key mandatory details (Name, Age, Sex, Birthdate) via a trusted PhilSys verification service, or choose to fill manually.",
+      "kyc_option_1": {
+        "type": "API_WRAPPER",
+        "cta_text": "Verify with PhilSys National ID to pre-fill details",
+        "note": "You will be securely wrapped to the PhilSys portal for authentication."
+      },
+      "kyc_option_2": {
+        "type": "MANUAL_FILL",
+        "cta_text": "Proceed to Manual Registration"
+      }
+    },
+    "profile_data_collection": {
+      "purpose": "If you are not using PhilSys, please provide all necessary details. Mandatory fields are required for compliance and profile integrity. Immediate validation checks are performed for Mobile Number and Email Address.",
+      "fields_mandatory": [
+        "Surname",
+        "First Name",
+        "Middle Name",
+        "Age",
+        "Sex",
+        "Birthdate",
+        "Address",
+        "Mobile Number",
+        "Email Address",
+        "Blood Type",
+        "Marital Status"
+      ],
+      "fields_optional": [
+        "Occupation"
+      ]
+    },
+    "compliance_trust": [
+      "Strict compliance with Philippine Data Privacy Act (DPA).",
+      "PII stored using industry-leading encryption standards.",
+      "Secure, server-side validation for data integrity.",
+      "Dedicated to maintaining the tone of trust and humanitarian service."
+    ],
+    "step_progress_teaser": "You are on Step 1: Registration. Next Steps: Submission, Payment.",
+    "footer_level_cta": "Have questions about data privacy? Contact our support team.",
+    "seo_keywords": [
+      "Red Cross Philippines registration",
+      "volunteer sign up",
+      "blood donor profile",
+      "Red Cross membership",
+      "PhilSys verification"
+    ]
   },
   "login_page": {
+    "page_purpose": "Access your secure profile. This login portal is for existing Red Cross members, staff, and donors to manage their information and program participation.",
     "hero_section": {
       "headline": "Secure Access to Your Humanitarian Profile.",
-      "sub_headline": "Your data is protected. Log in safely to manage your profile, track donations, or access staff resources.",
+      "sub_headline": "Your data is protected. Log in safely to manage your profile, track donations, or access staff resources. We maintain stringent data protection protocols.",
       "core_cta": "Login to My Profile"
-    }
+    },
+    "authentication_support": {
+      "form_fields": [
+        "Email Address",
+        "Password"
+      ],
+      "support_links": [
+        "Forgot Password?",
+        "Need Help Logging In?"
+      ]
+    },
+    "security_access": [
+      "Encrypted login credentials for maximum security.",
+      "Role-based access controls for authorized users.",
+      "Session time-out to protect against unauthorized access.",
+      "Compliant with all authentication best practices."
+    ],
+    "registration_teaser": {
+      "headline": "New to the Red Cross?",
+      "cta_text": "Create a New Account (Start Registration)"
+    },
+    "footer_level_cta": "Facing technical issues? Contact technical support for immediate assistance.",
+    "seo_keywords": [
+      "Red Cross profile login",
+      "member access",
+      "volunteer portal",
+      "secure login",
+      "Philippine Red Cross account"
+    ]
   },
   "payment_page": {
+    "page_purpose": "Step 3 of 3: Finalize your registration and activate your membership/program participation through a secure transaction. This completes your enrollment process.",
     "hero_section": {
-      "headline": "Complete Your Commitment",
-      "sub_headline": "Finalize your membership, volunteer, or donor registration securely.",
+      "headline": "Finalize Your Commitment. Secure Your Membership.",
+      "sub_headline": "Your secure transaction is the final step in activating your Red Cross profile. All payments are processed through our trusted, compliant payment gateway.",
       "core_cta": "Finalize Payment"
-    }
+    },
+    "transaction_details": {
+      "description": "Please enter your payment information. The Red Cross **does not store** any financial PII (credit card number, CVV) on our servers; data is passed directly to the secure gateway for processing.",
+      "form_fields": [
+        "Payment Method Selection (Card/E-Wallet)",
+        "Card Number",
+        "Expiry Date",
+        "CVV",
+        "Billing Address"
+      ]
+    },
+    "security_compliance": [
+      "PCI-DSS compliant payment gateway integration.",
+      "SSL/TLS encryption for all transaction data.",
+      "Fraud detection and prevention services.",
+      "Clear transaction summary before final charge."
+    ],
+    "receipt_placeholder": {
+      "info": "Upon successful payment, you will receive an official digital receipt via email, which will include your Transaction ID, Membership Number (if applicable), and a confirmation of your registration status."
+    },
+    "footer_level_cta": "Encountering a payment error? Contact our dedicated billing support.",
+    "seo_keywords": [
+      "Red Cross payment portal",
+      "secure transaction",
+      "membership fee payment",
+      "Philippine Red Cross donation",
+      "finalize registration"
+    ]
   }
 }

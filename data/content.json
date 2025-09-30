@@ -1,0 +1,23 @@
+{
+  "register_page": {
+    "hero_section": {
+      "headline": "Save Lives. Join the Red Cross.",
+      "sub_headline": "We take pride in urging all Filipinos to take part in the heroism of the Philippine Red Cross by becoming a full-fledged member, volunteer, or donor.",
+      "core_cta": "Proceed to Submission (Step 2)"
+    }
+  },
+  "login_page": {
+    "hero_section": {
+      "headline": "Secure Access to Your Humanitarian Profile.",
+      "sub_headline": "Your data is protected. Log in safely to manage your profile, track donations, or access staff resources.",
+      "core_cta": "Login to My Profile"
+    }
+  },
+  "payment_page": {
+    "hero_section": {
+      "headline": "Complete Your Commitment",
+      "sub_headline": "Finalize your membership, volunteer, or donor registration securely.",
+      "core_cta": "Finalize Payment"
+    }
+  }
+}

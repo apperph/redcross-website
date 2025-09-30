@@ -35,9 +35,7 @@
             <div class="flex justify-between items-center h-16">
                 <!-- Logo -->
                 <div class="flex items-center space-x-3">
-                    <div class="flex items-center justify-center w-10 h-10 bg-red-cross-blue rounded-full">
-                        <i class="fas fa-heart text-white text-lg"></i>
-                    </div>
+                    <img src="https://redcross.org.ph/wp-content/themes/yootheme/cache/Logo-2x2-1-03f043e8.png" alt="Red Cross Philippines Logo" class="w-10 h-10">
                     <span class="text-xl font-bold text-red-cross-blue">
                         Red Cross Philippines
                     </span>
@@ -53,9 +51,6 @@
                     </a>
                     <a href="register.html" class="bg-red-cross-light-blue text-red-cross-blue px-3 py-2 rounded-md text-sm font-medium transition-colors duration-200">
                         Register
-                    </a>
-                    <a href="payment.html" class="text-gray-600 hover:text-red-cross-blue hover:bg-gray-100 px-3 py-2 rounded-md text-sm font-medium transition-colors duration-200">
-                        Payment
                     </a>
                 </div>
 
@@ -119,7 +114,7 @@
                         <p class="text-gray-600 mb-4">
                             Scan your National ID QR code to automatically extract and fill your personal information.
                         </p>
-                        <div class="flex flex-col sm:flex-row gap-3 justify-center">
+                        <div class="flex justify-center">
                             <button
                                 type="button"
                                 onclick="openQRScanner()"
@@ -127,14 +122,6 @@
                             >
                                 <i class="fas fa-camera mr-2"></i>
                                 Scan National ID QR Code
-                            </button>
-                            <button
-                                type="button"
-                                onclick="fillTestData()"
-                                class="bg-green-600 text-white px-6 py-3 rounded-lg hover:bg-green-700 transition-colors duration-200"
-                            >
-                                <i class="fas fa-flask mr-2"></i>
-                                Test with Sample Data
                             </button>
                         </div>
                     </div>
@@ -146,101 +133,16 @@
                     <span class="font-medium">Data imported from National ID.</span>
                 </div>
 
-                <!-- Manual Entry Option -->
-                <div class="mb-8 p-6 bg-gray-50 rounded-lg border-2 border-dashed border-gray-300">
-                    <div class="text-center">
-                        <i class="fas fa-edit text-4xl text-gray-600 mb-4"></i>
-                        <h3 class="text-xl font-semibold text-gray-800 mb-2">
-                            Manual Entry
-                        </h3>
-                        <p class="text-gray-600">
-                            If you don't want to scan your National ID, you can manually enter all your personal details below.
-                        </p>
-                    </div>
-                </div>
 
-                <form id="registerForm" class="space-y-8">
-                    <!-- National ID Information -->
-                    <div>
-                        <h3 class="text-xl font-semibold text-gray-800 mb-6 flex items-center">
-                            <div class="w-1 h-6 bg-red-cross-red mr-3"></div>
-                            National ID Information
-                        </h3>
-                        
-                        <div class="grid md:grid-cols-2 gap-6">
-                            <div>
-                                <label for="fullName" class="form-label">
-                                    Full Name *
-                                </label>
-                                <input
-                                    type="text"
-                                    id="fullName"
-                                    name="fullName"
-                                    class="form-input"
-                                    placeholder="Enter your full name"
-                                    required
-                                />
-                                <p id="fullNameError" class="form-error hidden"></p>
-                            </div>
-
-                            <div>
-                                <label for="nationalIdNumber" class="form-label">
-                                    National ID Number *
-                                </label>
-                                <input
-                                    type="text"
-                                    id="nationalIdNumber"
-                                    name="nationalIdNumber"
-                                    class="form-input"
-                                    placeholder="Enter your National ID number"
-                                    required
-                                />
-                                <p id="nationalIdNumberError" class="form-error hidden"></p>
-                            </div>
-
-                            <div>
-                                <label for="dateOfBirth" class="form-label">
-                                    Date of Birth *
-                                </label>
-                                <input
-                                    type="date"
-                                    id="dateOfBirth"
-                                    name="dateOfBirth"
-                                    class="form-input"
-                                    required
-                                />
-                                <p id="dateOfBirthError" class="form-error hidden"></p>
-                            </div>
-
-                            <div>
-                                <label for="address" class="form-label">
-                                    Address *
-                                </label>
-                                <textarea
-                                    id="address"
-                                    name="address"
-                                    rows="3"
-                                    class="form-input"
-                                    placeholder="Enter your complete address"
-                                    required
-                                ></textarea>
-                                <p id="addressError" class="form-error hidden"></p>
-                            </div>
-                        </div>
-                    </div>
-
+                <div class="form-container" style="max-width: 800px; margin: 0 auto; background: #ffffff; padding: 30px; border-radius: 8px; box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);">
+                    <form id="registerForm" class="space-y-8">
                     <!-- Personal Information -->
                     <div>
-                        <h3 class="text-xl font-semibold text-gray-800 mb-6 flex items-center">
-                            <div class="w-1 h-6 bg-red-cross-red mr-3"></div>
-                            Additional Personal Information
-                        </h3>
+                        <div class="section-header">Additional Personal Information</div>
                         
-                        <div class="grid md:grid-cols-2 gap-6">
-                            <div>
-                                <label for="surname" class="form-label">
-                                    Surname (Last Name) *
-                                </label>
+                        <div class="form-grid">
+                            <div class="field-group">
+                                <label for="surname" class="required">Surname (Last Name)</label>
                                 <input
                                     type="text"
                                     id="surname"
@@ -251,10 +153,8 @@
                                 <p id="surnameError" class="form-error hidden"></p>
                             </div>
 
-                            <div>
-                                <label for="firstName" class="form-label">
-                                    First Name *
-                                </label>
+                            <div class="field-group">
+                                <label for="firstName" class="required">First Name</label>
                                 <input
                                     type="text"
                                     id="firstName"
@@ -265,10 +165,8 @@
                                 <p id="firstNameError" class="form-error hidden"></p>
                             </div>
 
-                            <div>
-                                <label for="middleName" class="form-label">
-                                    Middle Name
-                                </label>
+                            <div class="field-group">
+                                <label for="middleName">Middle Name</label>
                                 <input
                                     type="text"
                                     id="middleName"
@@ -277,10 +175,8 @@
                                 />
                             </div>
 
-                            <div>
-                                <label for="age" class="form-label">
-                                    Age *
-                                </label>
+                            <div class="field-group">
+                                <label for="age" class="required">Age</label>
                                 <input
                                     type="number"
                                     id="age"
@@ -293,33 +189,29 @@
                                 <p id="ageError" class="form-error hidden"></p>
                             </div>
 
-                            <div>
-                                <label for="sex" class="form-label">
-                                    Sex *
-                                </label>
+                            <div class="field-group">
+                                <label for="sex" class="required">Sex</label>
                                 <select
                                     id="sex"
                                     name="sex"
                                     class="form-input"
                                     required
                                 >
-                                    <option value="">Select Sex</option>
+                                    <option value="" disabled selected>Select Sex</option>
                                     <option value="male">Male</option>
                                     <option value="female">Female</option>
-                                    <option value="other">Other</option>
                                 </select>
                                 <p id="sexError" class="form-error hidden"></p>
                             </div>
 
-                            <div>
-                                <label for="birthdate" class="form-label">
-                                    Birthdate *
-                                </label>
+                            <div class="field-group">
+                                <label for="birthdate" class="required">Birthdate</label>
                                 <input
                                     type="date"
                                     id="birthdate"
                                     name="birthdate"
                                     class="form-input"
+                                    placeholder="mm/dd/yyyy"
                                     required
                                 />
                                 <p id="birthdateError" class="form-error hidden"></p>
@@ -329,79 +221,63 @@
 
                     <!-- Contact Information -->
                     <div>
-                        <h3 class="text-xl font-semibold text-gray-800 mb-6 flex items-center">
-                            <div class="w-1 h-6 bg-red-cross-red mr-3"></div>
-                            Contact Information
-                        </h3>
+                        <div class="section-header">Contact Information</div>
                         
-                        <div class="space-y-6">
-                            <div>
-                                <label for="contactAddress" class="form-label">
-                                    Complete Address *
-                                </label>
+                        <div class="form-grid">
+                            <div class="field-group full-width">
+                                <label for="address" class="required">Complete Address</label>
                                 <textarea
-                                    id="contactAddress"
-                                    name="contactAddress"
+                                    id="address"
+                                    name="address"
                                     rows="3"
                                     class="form-input"
                                     placeholder="Street, Barangay, City/Province"
                                     required
                                 ></textarea>
-                                <p id="contactAddressError" class="form-error hidden"></p>
+                                <p id="addressError" class="form-error hidden"></p>
+                            </div>
+                            
+                            <div class="field-group">
+                                <label for="mobile" class="required">Mobile Number</label>
+                                <input
+                                    type="tel"
+                                    id="mobile"
+                                    name="mobile"
+                                    class="form-input"
+                                    placeholder="+63 9XX XXX XXXX"
+                                    required
+                                />
+                                <p id="mobileError" class="form-error hidden"></p>
                             </div>
 
-                            <div class="grid md:grid-cols-2 gap-6">
-                                <div>
-                                    <label for="mobile" class="form-label">
-                                        Mobile Number *
-                                    </label>
-                                    <input
-                                        type="tel"
-                                        id="mobile"
-                                        name="mobile"
-                                        class="form-input"
-                                        placeholder="+63 9XX XXX XXXX"
-                                        required
-                                    />
-                                    <p id="mobileError" class="form-error hidden"></p>
-                                </div>
-
-                                <div>
-                                    <label for="email" class="form-label">
-                                        Email Address *
-                                    </label>
-                                    <input
-                                        type="email"
-                                        id="email"
-                                        name="email"
-                                        class="form-input"
-                                        required
-                                    />
-                                    <p id="emailError" class="form-error hidden"></p>
-                                </div>
+                            <div class="field-group">
+                                <label for="email" class="required">Email Address</label>
+                                <input
+                                    type="email"
+                                    id="email"
+                                    name="email"
+                                    class="form-input"
+                                    required
+                                />
+                                <p id="emailError" class="form-error hidden"></p>
                             </div>
                         </div>
                     </div>
 
                     <!-- Additional Information -->
                     <div>
-                        <h3 class="text-xl font-semibold text-gray-800 mb-6 flex items-center">
-                            <div class="w-1 h-6 bg-red-cross-red mr-3"></div>
-                            Additional Information
-                        </h3>
+                        <div class="section-header">Additional Information</div>
                         
-                        <div class="grid md:grid-cols-2 gap-6">
-                            <div>
-                                <label for="bloodType" class="form-label">
-                                    Blood Type *
-                                </label>
+                        <div class="form-grid">
+                            <div class="field-group">
+                                <label for="bloodType" class="required">Blood Type</label>
                                 <select
                                     id="bloodType"
                                     name="bloodType"
                                     class="form-input"
                                     required
                                 >
-                                    <option value="">Select Blood Type</option>
+                                    <option value="" disabled selected>Select Blood Type</option>
                                     <option value="A+">A+</option>
                                     <option value="A-">A-</option>
                                     <option value="B+">B+</option>
@@ -414,32 +290,30 @@
                                 <p id="bloodTypeError" class="form-error hidden"></p>
                             </div>
 
-                            <div>
-                                <label for="maritalStatus" class="form-label">
-                                    Marital Status
-                                </label>
+                            <div class="field-group">
+                                <label for="maritalStatus">Marital Status</label>
                                 <select
                                     id="maritalStatus"
                                     name="maritalStatus"
                                     class="form-input"
                                 >
-                                    <option value="">Select Marital Status</option>
+                                    <option value="" disabled selected>Select Marital Status</option>
                                     <option value="single">Single</option>
                                     <option value="married">Married</option>
                                     <option value="widowed">Widowed</option>
                                     <option value="divorced">Divorced</option>
+                                    <option value="separated">Separated</option>
                                 </select>
                             </div>
 
-                            <div class="md:col-span-2">
-                                <label for="occupation" class="form-label">
-                                    Occupation
-                                </label>
+                            <div class="field-group full-width">
+                                <label for="occupation">Occupation</label>
                                 <input
                                     type="text"
                                     id="occupation"
                                     name="occupation"
                                     class="form-input"
+                                    placeholder="Enter your occupation"
                                 />
                             </div>
                         </div>
@@ -471,12 +345,13 @@
                     <button
                         type="submit"
                         id="registerBtn"
-                        class="btn-primary w-full"
+                        class="bg-blue-600 text-white px-6 py-3 rounded-lg font-semibold hover:bg-blue-700 transition-all duration-300 transform hover:-translate-y-1 hover:shadow-lg w-full"
                     >
                         <i class="fas fa-arrow-right mr-2"></i>
                         Continue to Profile Submission
                     </button>
-                </form>
+                    </form>
+                </div>
             </div>
 
             <!-- Footer CTA -->

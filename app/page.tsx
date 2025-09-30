@@ -1,31 +1,58 @@
-// app/page.tsx
+import Link from 'next/link';
+
+// Custom colors defined in globals.css (or assumed in tailwind config)
+const primaryBlue = 'var(--rc-blue)';
+const primaryRed = 'var(--rc-red)';
+const darkText = 'var(--rc-dark)';
+
 export default function Home() {
   return (
-    <main className="flex min-h-screen flex-col items-center justify-center p-8">
-      <h1 className="text-4xl font-bold text-red-600">Welcome to Red Cross</h1>
-      <p className="mt-4 text-gray-600">
-        This is the homepage. Use the navigation below to get started.
-      </p>
-      <div className="mt-6 flex gap-4">
-        <a
-          href="/register"
-          className="rounded bg-blue-600 px-4 py-2 text-white hover:bg-blue-700"
-        >
-          Register
-        </a>
-        <a
-          href="/login"
-          className="rounded bg-gray-800 px-4 py-2 text-white hover:bg-gray-900"
-        >
-          Login
-        </a>
-        <a
-          href="/payment"
-          className="rounded bg-green-600 px-4 py-2 text-white hover:bg-green-700"
-        >
-          Payment
-        </a>
+    <div 
+      className="min-h-screen flex flex-col items-center justify-center p-4 text-center"
+      style={{ backgroundColor: '#ffffff', color: darkText }}
+    >
+      <div className="max-w-xl w-full p-8 rounded-xl shadow-2xl" 
+           style={{ backgroundColor: 'var(--rc-bg-subtle, rgba(0, 40, 136, 0.05))' }}>
+        
+        {/* Logo Placeholder */}
+        <div className="text-4xl font-black mb-6" style={{ color: primaryRed }}>
+          [Red Cross Philippines]
+        </div>
+
+        <h1 className="text-5xl font-extrabold mb-4" style={{ color: primaryBlue }}>
+          Welcome to the Volunteer Portal
+        </h1>
+        
+        <p className="text-lg mb-8">
+          Your secure gateway to becoming a member, volunteer, or blood donor. Join the mission of humanity and compassion.
+        </p>
+
+        {/* Action Buttons */}
+        <div className="flex flex-col md:flex-row space-y-4 md:space-y-0 md:space-x-4 justify-center">
+          
+          <Link href="/register" passHref>
+            <div 
+              className="py-3 px-8 rounded-lg text-white font-bold text-lg transition duration-300 hover:opacity-90 shadow-lg cursor-pointer"
+              style={{ backgroundColor: primaryRed }}
+            >
+              Start Registration
+            </div>
+          </Link>
+
+          <Link href="/login" passHref>
+            <div 
+              className="py-3 px-8 rounded-lg border-2 font-bold text-lg transition duration-300 hover:bg-rc-blue/5 cursor-pointer"
+              style={{ borderColor: primaryBlue, color: primaryBlue }}
+            >
+              Login to My Profile
+            </div>
+          </Link>
+        </div>
       </div>
-    </main>
-  )
+
+      <footer className="mt-8 text-sm text-gray-600">
+        Committed to data security and humanitarian service since 1947.
+      </footer>
+    </div>
+  );
 }

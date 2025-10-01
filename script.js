@@ -84,23 +84,38 @@ document.addEventListener("DOMContentLoaded", () => {
     registerForm.addEventListener("submit", (e) => {
       e.preventDefault();
 
-      const username = document.getElementById("regUsername").value;
-      const password = document.getElementById("regPassword").value;
+      // Collect form values
+      const userData = {
+        surname: document.getElementById("surname").value,
+        firstName: document.getElementById("firstName").value,
+        middleName: document.getElementById("middleName").value,
+        age: document.getElementById("age").value,
+        sex: document.getElementById("sex").value,
+        birthdate: document.getElementById("birthdate").value,
+        address: document.getElementById("address").value,
+        mobile: document.getElementById("mobile").value,
+        email: document.getElementById("email").value,
+        bloodType: document.getElementById("bloodType").value,
+        maritalStatus: document.getElementById("maritalStatus").value,
+        occupation: document.getElementById("occupation").value,
+        paid: false
+      };
 
+      // Get existing users
       let users = JSON.parse(localStorage.getItem("users")) || [];
 
-      // Prevent duplicate usernames
-      if (users.find(u => u.username === username)) {
-        alert("Username already exists!");
+      // Prevent duplicate by email
+      if (users.find(u => u.email === userData.email)) {
+        alert("Email already registered!");
         return;
       }
 
       // Save new user
-      users.push({ username, password, paid: false });
+      users.push(userData);
       localStorage.setItem("users", JSON.stringify(users));
 
-      // Create a session for the new user
-      localStorage.setItem("session", JSON.stringify({ username }));
+      // Create session
+      localStorage.setItem("session", JSON.stringify({ email: userData.email }));
 
       // Redirect to payment
       alert("Registration successful! Please proceed to payment.");

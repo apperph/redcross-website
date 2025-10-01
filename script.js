@@ -127,29 +127,70 @@ document.addEventListener("DOMContentLoaded", () => {
 // ===============================
 // Payment Handler
 // ===============================
-const Payment = {
-  handleSubmit: (event) => {
-    event.preventDefault();
+document.addEventListener("DOMContentLoaded", () => {
+  const paymentForm = document.getElementById("paymentForm");
 
-    const pendingUser = JSON.parse(localStorage.getItem("pendingPaymentUser"));
+  if (paymentForm) {
+    const methodRadios = paymentForm.querySelectorAll("input[name='paymentMethod']");
+    const cardDetails = document.getElementById("cardDetails");
+    const gcashDetails = document.getElementById("gcashDetails");
+    const mayaDetails = document.getElementById("mayaDetails");
+    const bankDetails = document.getElementById("bankDetails");
 
-    if (pendingUser) {
-      // Save to registered users
-      const users = JSON.parse(localStorage.getItem("registeredUsers") || "[]");
-      users.push(pendingUser);
-      localStorage.setItem("registeredUsers", JSON.stringify(users));
+    // Hide all detail sections
+    const hideAll = () => {
+      [cardDetails, gcashDetails, mayaDetails, bankDetails].forEach(section => {
+        section.classList.add("hidden");
+      });
+    };
 
-      // Clear pending
-      localStorage.removeItem("pendingPaymentUser");
+    // Show selected method section
+    methodRadios.forEach(radio => {
+      radio.addEventListener("change", () => {
+        hideAll();
+        if (radio.checked) {
+          if (radio.value === "card") cardDetails.classList.remove("hidden");
+          if (radio.value === "gcash") gcashDetails.classList.remove("hidden");
+          if (radio.value === "maya") mayaDetails.classList.remove("hidden");
+          if (radio.value === "bank") bankDetails.classList.remove("hidden");
+        }
+      });
+    });
 
-      alert("✅ Payment successful! You can now log in.");
-      window.location.href = "login.html";
-    } else {
-      alert("⚠️ No pending registration found. Please register first.");
-      window.location.href = "register.html";
-    }
+    // Handle payment submission
+    paymentForm.addEventListener("submit", (e) => {
+      e.preventDefault();
+
+      const chosen = [...methodRadios].find(r => r.checked);
+      if (!chosen) {
+        alert("Please select a payment method.");
+        return;
+      }
+
+      const session = JSON.parse(localStorage.getItem("session"));
+      if (!session) {
+        alert("Session expired. Please register or login again.");
+        window.location.href = "login.html";
+        return;
+      }
+
+      // Get users and mark payment
+      let users = JSON.parse(localStorage.getItem("users")) || [];
+      let user = users.find(u => u.email === session.email);
+
+      if (user) {
+        user.paid = true;
+        localStorage.setItem("users", JSON.stringify(users));
+        alert(`Payment successful via ${chosen.value}!`);
+        window.location.href = "index.html"; // redirect after payment
+      } else {
+        alert("User not found. Please register again.");
+        window.location.href = "register.html";
+      }
+    });
   }
-};
+});
+
 
 // ===============================
 // Attach Event Listeners

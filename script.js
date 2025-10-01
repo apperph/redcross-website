@@ -78,34 +78,36 @@ const Login = {
 // ===============================
 // Registration Handler
 // ===============================
-const Registration = {
-  handleSubmit: (event) => {
-    event.preventDefault();
+document.addEventListener("DOMContentLoaded", () => {
+  const registerForm = document.getElementById("registerForm");
+  if (registerForm) {
+    registerForm.addEventListener("submit", (e) => {
+      e.preventDefault();
 
-    const formData = {
-      firstName: document.getElementById("firstName").value,
-      lastName: document.getElementById("lastName").value,
-      email: document.getElementById("email").value,
-      password: document.getElementById("password").value
-    };
+      const username = document.getElementById("regUsername").value;
+      const password = document.getElementById("regPassword").value;
 
-    // Validate
-    if (!Validator.validateEmail(formData.email)) {
-      alert("Please enter a valid email address");
-      return;
-    }
-    if (!Validator.validatePassword(formData.password)) {
-      alert("Password must be at least 6 characters long");
-      return;
-    }
+      let users = JSON.parse(localStorage.getItem("users")) || [];
 
-    // Save user temporarily until payment is done
-    localStorage.setItem("pendingPaymentUser", JSON.stringify(formData));
+      // Prevent duplicate usernames
+      if (users.find(u => u.username === username)) {
+        alert("Username already exists!");
+        return;
+      }
 
-    alert("Registration successful! Redirecting to payment...");
-    window.location.href = "payment.html";
+      // Save new user
+      users.push({ username, password, paid: false });
+      localStorage.setItem("users", JSON.stringify(users));
+
+      // Create a session for the new user
+      localStorage.setItem("session", JSON.stringify({ username }));
+
+      // Redirect to payment
+      alert("Registration successful! Please proceed to payment.");
+      window.location.href = "payment.html";
+    });
   }
-};
+});
 
 // ===============================
 // Payment Handler

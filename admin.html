@@ -1,0 +1,1654 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Dashboard - Red Cross Philippines</title>
+    <meta name="description" content="Red Cross Philippines Admin Dashboard - Manage users, events, volunteers, and donations">
+    <link rel="icon" type="image/x-icon" href="favicon.ico">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        'red-cross-blue': '#002888',
+                        'red-cross-red': '#E3000E',
+                        'red-cross-light-blue': '#e6f0ff',
+                        'red-cross-secondary-blue': '#1a4ba8'
+                    },
+                    fontFamily: {
+                        'inter': ['Inter', 'sans-serif']
+                    }
+                }
+            }
+        }
+    </script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body class="min-h-screen bg-gray-50 font-inter">
+    <!-- Top Navigation Bar -->
+    <nav class="bg-white shadow-lg fixed top-0 left-0 right-0 z-50">
+        <div class="flex justify-between items-center h-16 px-4 sm:px-6 lg:px-8">
+            <!-- Logo and Title -->
+            <div class="flex items-center space-x-3">
+                <img src="https://redcross.org.ph/wp-content/themes/yootheme/cache/Logo-2x2-1-03f043e8.png" alt="Red Cross Philippines Logo" class="w-10 h-10">
+                <div>
+                    <h1 class="text-xl font-bold text-red-cross-blue">Admin Dashboard</h1>
+                    <p class="text-sm text-gray-500">Red Cross Philippines</p>
+                </div>
+            </div>
+
+            <!-- Admin Profile Menu -->
+            <div class="flex items-center space-x-4">
+                <!-- Notifications -->
+                <button class="relative p-2 text-gray-600 hover:text-red-cross-blue transition-colors" onclick="showNotifications()">
+                    <i class="fas fa-bell text-xl"></i>
+                    <span class="absolute -top-1 -right-1 bg-red-cross-red text-white text-xs rounded-full h-5 w-5 flex items-center justify-center">3</span>
+                </button>
+
+                <!-- Profile Dropdown -->
+                <div class="relative">
+                    <button id="profileMenuBtn" class="flex items-center space-x-3 p-2 rounded-lg hover:bg-gray-100 transition-colors" onclick="toggleProfileMenu()">
+                        <div class="w-8 h-8 bg-red-cross-blue rounded-full flex items-center justify-center">
+                            <i class="fas fa-user text-white text-sm"></i>
+                        </div>
+                        <div class="text-left">
+                            <p class="text-sm font-medium text-gray-800">Admin User</p>
+                            <p class="text-xs text-gray-500">Administrator</p>
+                        </div>
+                        <i class="fas fa-chevron-down text-gray-400"></i>
+                    </button>
+
+                    <!-- Profile Dropdown Menu -->
+                    <div id="profileMenu" class="absolute right-0 mt-2 w-64 bg-white rounded-lg shadow-lg border border-gray-200 hidden">
+                        <div class="py-1">
+                            <!-- Account Section -->
+                            <div class="px-3 py-2">
+                                <h4 class="text-xs font-semibold text-gray-500 uppercase tracking-wider mb-2">Account</h4>
+                                <a href="#" class="flex items-center px-3 py-3 text-sm text-gray-700 hover:bg-red-cross-light-blue hover:text-red-cross-blue transition-colors duration-200 rounded-md">
+                                    <i class="fas fa-user mr-3 text-gray-500 w-4"></i>
+                                    Profile Settings
+                                </a>
+                                <a href="#" class="flex items-center px-3 py-3 text-sm text-gray-700 hover:bg-red-cross-light-blue hover:text-red-cross-blue transition-colors duration-200 rounded-md">
+                                    <i class="fas fa-cog mr-3 text-gray-500 w-4"></i>
+                                    System Settings
+                                </a>
+                            </div>
+                            
+                            <!-- Navigation Section -->
+                            <div class="border-t border-gray-100 px-3 py-2">
+                                <h4 class="text-xs font-semibold text-gray-500 uppercase tracking-wider mb-2">Navigation</h4>
+                                <a href="index.html" class="flex items-center px-3 py-3 text-sm text-gray-700 hover:bg-red-cross-light-blue hover:text-red-cross-blue transition-colors duration-200 rounded-md">
+                                    <i class="fas fa-home mr-3 text-gray-500 w-4"></i>
+                                    <span class="flex-1">Back to Site</span>
+                                    <i class="fas fa-external-link-alt text-gray-400 text-xs ml-2"></i>
+                                </a>
+                            </div>
+                            
+                            <!-- Session Section -->
+                            <div class="border-t border-gray-100 px-3 py-2">
+                                <h4 class="text-xs font-semibold text-gray-500 uppercase tracking-wider mb-2">Session</h4>
+                                <a href="#" onclick="logout()" class="flex items-center px-3 py-3 text-sm text-red-cross-red hover:bg-red-50 hover:text-red-700 transition-colors duration-200 rounded-md">
+                                    <i class="fas fa-sign-out-alt mr-3 w-4"></i>
+                                    Logout
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Main Layout -->
+    <div class="flex pt-16">
+        <!-- Sidebar Navigation -->
+        <aside class="w-64 bg-white shadow-lg min-h-screen fixed left-0 top-16 z-40">
+            <nav class="p-4">
+                <ul class="space-y-2">
+                    <li>
+                        <button class="flex items-center space-x-3 px-4 py-3 text-gray-800 bg-red-cross-light-blue rounded-lg transition-all duration-200 cursor-pointer font-medium shadow-sm hover:shadow-md hover:bg-red-cross-blue hover:text-white w-full text-left nav-link active" data-section="dashboard" onclick="showSection('dashboard')">
+                            <i class="fas fa-tachometer-alt w-5 text-center"></i>
+                            <span>Dashboard</span>
+                        </button>
+                    </li>
+                    <li>
+                        <button class="flex items-center space-x-3 px-4 py-3 text-gray-800 bg-red-cross-light-blue rounded-lg transition-all duration-200 cursor-pointer font-medium shadow-sm hover:shadow-md hover:bg-red-cross-blue hover:text-white w-full text-left nav-link" data-section="users" onclick="showSection('users')">
+                            <i class="fas fa-users w-5 text-center"></i>
+                            <span>User Management</span>
+                        </button>
+                    </li>
+                    <li>
+                        <button class="flex items-center space-x-3 px-4 py-3 text-gray-800 bg-red-cross-light-blue rounded-lg transition-all duration-200 cursor-pointer font-medium shadow-sm hover:shadow-md hover:bg-red-cross-blue hover:text-white w-full text-left nav-link" data-section="events" onclick="showSection('events')">
+                            <i class="fas fa-calendar-alt w-5 text-center"></i>
+                            <span>Event Management</span>
+                        </button>
+                    </li>
+                    <li>
+                        <button class="flex items-center space-x-3 px-4 py-3 text-gray-800 bg-red-cross-light-blue rounded-lg transition-all duration-200 cursor-pointer font-medium shadow-sm hover:shadow-md hover:bg-red-cross-blue hover:text-white w-full text-left nav-link" data-section="volunteers" onclick="showSection('volunteers')">
+                            <i class="fas fa-hands-helping w-5 text-center"></i>
+                            <span>Volunteers & Staff</span>
+                        </button>
+                    </li>
+                    <li>
+                        <button class="flex items-center space-x-3 px-4 py-3 text-gray-800 bg-red-cross-light-blue rounded-lg transition-all duration-200 cursor-pointer font-medium shadow-sm hover:shadow-md hover:bg-red-cross-blue hover:text-white w-full text-left nav-link" data-section="donations" onclick="showSection('donations')">
+                            <i class="fas fa-donate w-5 text-center"></i>
+                            <span>Donation Tracking</span>
+                        </button>
+                    </li>
+                    <li>
+                        <button class="flex items-center space-x-3 px-4 py-3 text-gray-800 bg-red-cross-light-blue rounded-lg transition-all duration-200 cursor-pointer font-medium shadow-sm hover:shadow-md hover:bg-red-cross-blue hover:text-white w-full text-left nav-link" data-section="settings" onclick="showSection('settings')">
+                            <i class="fas fa-cog w-5 text-center"></i>
+                            <span>Settings</span>
+                        </button>
+                    </li>
+                </ul>
+            </nav>
+        </aside>
+
+        <!-- Main Content Area -->
+        <main class="flex-1 ml-64 p-6">
+            <!-- Dashboard Overview Section -->
+            <section id="dashboard-section" class="admin-section">
+                <div class="mb-6">
+                    <h2 class="text-2xl font-bold text-gray-800 mb-2">Dashboard Overview</h2>
+                    <p class="text-gray-600">Welcome to the Red Cross Philippines Admin Dashboard</p>
+                </div>
+
+                <!-- Stats Cards -->
+                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-8">
+                    <div class="bg-white rounded-lg shadow-lg p-6 border-l-4 border-blue-500 hover:shadow-xl transition-shadow cursor-pointer" onclick="showSection('users')">
+                        <div class="flex items-center justify-between">
+                            <div>
+                                <p class="text-sm font-medium text-gray-600">Total Users</p>
+                                <p class="text-2xl font-bold text-gray-800">2,847</p>
+                            </div>
+                            <div class="w-12 h-12 bg-blue-100 rounded-full flex items-center justify-center">
+                                <i class="fas fa-users text-blue-600 text-xl"></i>
+                            </div>
+                        </div>
+                        <div class="mt-4">
+                            <span class="text-green-600 text-sm font-medium">+12%</span>
+                            <span class="text-gray-500 text-sm ml-2">from last month</span>
+                        </div>
+                    </div>
+
+                    <div class="bg-white rounded-lg shadow-lg p-6 border-l-4 border-green-500 hover:shadow-xl transition-shadow cursor-pointer" onclick="showSection('volunteers')">
+                        <div class="flex items-center justify-between">
+                            <div>
+                                <p class="text-sm font-medium text-gray-600">Active Volunteers</p>
+                                <p class="text-2xl font-bold text-gray-800">1,234</p>
+                            </div>
+                            <div class="w-12 h-12 bg-green-100 rounded-full flex items-center justify-center">
+                                <i class="fas fa-hands-helping text-green-600 text-xl"></i>
+                            </div>
+                        </div>
+                        <div class="mt-4">
+                            <span class="text-green-600 text-sm font-medium">+8%</span>
+                            <span class="text-gray-500 text-sm ml-2">from last month</span>
+                        </div>
+                    </div>
+
+                    <div class="bg-white rounded-lg shadow-lg p-6 border-l-4 border-yellow-500 hover:shadow-xl transition-shadow cursor-pointer" onclick="showSection('events')">
+                        <div class="flex items-center justify-between">
+                            <div>
+                                <p class="text-sm font-medium text-gray-600">Upcoming Events</p>
+                                <p class="text-2xl font-bold text-gray-800">23</p>
+                            </div>
+                            <div class="w-12 h-12 bg-yellow-100 rounded-full flex items-center justify-center">
+                                <i class="fas fa-calendar-alt text-yellow-600 text-xl"></i>
+                            </div>
+                        </div>
+                        <div class="mt-4">
+                            <span class="text-blue-600 text-sm font-medium">5 this week</span>
+                        </div>
+                    </div>
+
+                    <div class="bg-white rounded-lg shadow-lg p-6 border-l-4 border-red-500 hover:shadow-xl transition-shadow cursor-pointer" onclick="showSection('donations')">
+                        <div class="flex items-center justify-between">
+                            <div>
+                                <p class="text-sm font-medium text-gray-600">Total Donations</p>
+                                <p class="text-2xl font-bold text-gray-800">₱2.4M</p>
+                            </div>
+                            <div class="w-12 h-12 bg-red-100 rounded-full flex items-center justify-center">
+                                <i class="fas fa-donate text-red-600 text-xl"></i>
+                            </div>
+                        </div>
+                        <div class="mt-4">
+                            <span class="text-green-600 text-sm font-medium">+15%</span>
+                            <span class="text-gray-500 text-sm ml-2">from last month</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Recent Activity -->
+                <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
+                    <div class="bg-white rounded-lg shadow-lg p-6">
+                        <h3 class="text-lg font-semibold text-gray-800 mb-4">Recent Activity</h3>
+                        <div class="space-y-4">
+                            <div class="flex items-center space-x-3 cursor-pointer hover:bg-gray-50 p-2 rounded-lg transition-colors" onclick="showSection('users')">
+                                <div class="w-8 h-8 bg-green-100 rounded-full flex items-center justify-center">
+                                    <i class="fas fa-user-plus text-green-600 text-sm"></i>
+                                </div>
+                                <div>
+                                    <p class="text-sm font-medium text-gray-800">New user registered</p>
+                                    <p class="text-xs text-gray-500">John Doe - 2 minutes ago</p>
+                                </div>
+                            </div>
+                            <div class="flex items-center space-x-3 cursor-pointer hover:bg-gray-50 p-2 rounded-lg transition-colors" onclick="showSection('events')">
+                                <div class="w-8 h-8 bg-blue-100 rounded-full flex items-center justify-center">
+                                    <i class="fas fa-calendar-plus text-blue-600 text-sm"></i>
+                                </div>
+                                <div>
+                                    <p class="text-sm font-medium text-gray-800">New event created</p>
+                                    <p class="text-xs text-gray-500">Blood Drive - 15 minutes ago</p>
+                                </div>
+                            </div>
+                            <div class="flex items-center space-x-3 cursor-pointer hover:bg-gray-50 p-2 rounded-lg transition-colors" onclick="showSection('donations')">
+                                <div class="w-8 h-8 bg-yellow-100 rounded-full flex items-center justify-center">
+                                    <i class="fas fa-donate text-yellow-600 text-sm"></i>
+                                </div>
+                                <div>
+                                    <p class="text-sm font-medium text-gray-800">New donation received</p>
+                                    <p class="text-xs text-gray-500">₱5,000 - 1 hour ago</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="bg-white rounded-lg shadow-lg p-6">
+                        <h3 class="text-lg font-semibold text-gray-800 mb-4">Quick Actions</h3>
+                        <div class="grid grid-cols-2 gap-4">
+                            <button id="quickAddEvent" class="p-4 bg-red-cross-light-blue rounded-lg hover:bg-red-cross-blue hover:text-white transition-colors text-center cursor-pointer" onclick="showEventForm()">
+                                <i class="fas fa-plus text-2xl mb-2"></i>
+                                <p class="text-sm font-medium">Add Event</p>
+                            </button>
+                            <button id="quickAddUser" class="p-4 bg-red-cross-light-blue rounded-lg hover:bg-red-cross-blue hover:text-white transition-colors text-center cursor-pointer" onclick="showDashboardUserForm()">
+                                <i class="fas fa-user-plus text-2xl mb-2"></i>
+                                <p class="text-sm font-medium">Add User</p>
+                            </button>
+                            <button id="quickExportData" class="p-4 bg-red-cross-light-blue rounded-lg hover:bg-red-cross-blue hover:text-white transition-colors text-center cursor-pointer" onclick="showNotification('Export functionality coming soon!', 'info')">
+                                <i class="fas fa-file-export text-2xl mb-2"></i>
+                                <p class="text-sm font-medium">Export Data</p>
+                            </button>
+                            <button id="quickViewReports" class="p-4 bg-red-cross-light-blue rounded-lg hover:bg-red-cross-blue hover:text-white transition-colors text-center cursor-pointer" onclick="showNotification('Reports functionality coming soon!', 'info')">
+                                <i class="fas fa-chart-bar text-2xl mb-2"></i>
+                                <p class="text-sm font-medium">View Reports</p>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Dashboard User Creation Form Container -->
+                <div id="dashboardUserFormContainer" class="bg-white rounded-lg shadow-lg p-6 mt-8 hidden">
+                    <div class="mb-6">
+                        <h3 class="text-lg font-semibold text-gray-800 mb-2">Add New User</h3>
+                        <p class="text-sm text-gray-600">Fill out the form below to add a new user to the system</p>
+                    </div>
+                    
+                    <form id="dashboardUserForm" class="space-y-6">
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                            <div>
+                                <label class="block text-sm font-semibold text-gray-700 mb-2">First Name</label>
+                                <input type="text" id="dashboardUserFirstName" class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent" placeholder="Enter first name" required>
+                            </div>
+                            <div>
+                                <label class="block text-sm font-semibold text-gray-700 mb-2">Last Name</label>
+                                <input type="text" id="dashboardUserLastName" class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent" placeholder="Enter last name" required>
+                            </div>
+                        </div>
+                        
+                        <div>
+                            <label class="block text-sm font-semibold text-gray-700 mb-2">Email</label>
+                            <input type="email" id="dashboardUserEmail" class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent" placeholder="Enter email address" required>
+                        </div>
+                        
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                            <div>
+                                <label class="block text-sm font-semibold text-gray-700 mb-2">Role</label>
+                                <select id="dashboardUserRole" class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent">
+                                    <option value="">Select role</option>
+                                    <option value="member">Member</option>
+                                    <option value="volunteer">Volunteer</option>
+                                    <option value="staff">Staff</option>
+                                    <option value="admin">Admin</option>
+                                </select>
+                            </div>
+                            <div>
+                                <label class="block text-sm font-semibold text-gray-700 mb-2">Status</label>
+                                <select id="dashboardUserStatus" class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent">
+                                    <option value="">Select status</option>
+                                    <option value="active">Active</option>
+                                    <option value="inactive">Inactive</option>
+                                    <option value="pending">Pending</option>
+                                </select>
+                            </div>
+                        </div>
+                        
+                        <div class="flex justify-end space-x-4 pt-4">
+                            <button type="button" id="cancelDashboardUser" class="px-6 py-3 bg-gray-200 text-gray-700 rounded-lg font-semibold hover:bg-gray-300 transition-colors">
+                                Cancel
+                            </button>
+                            <button type="submit" class="px-6 py-3 bg-blue-600 text-white rounded-lg font-semibold hover:bg-blue-700 transition-colors">
+                                Save User
+                            </button>
+                        </div>
+                    </form>
+                </div>
+
+                <!-- Event Creation Form Container -->
+                <div id="eventFormContainer" class="bg-white rounded-lg shadow-lg p-6 mt-8 hidden">
+                    <div class="mb-6">
+                        <h3 class="text-lg font-semibold text-gray-800 mb-2">Create New Event</h3>
+                        <p class="text-sm text-gray-600">Fill out the form below to create a new Red Cross event</p>
+                    </div>
+                    
+                    <form id="dashboardEventForm" class="space-y-6">
+                        <div>
+                            <label class="block text-sm font-semibold text-gray-700 mb-2">Event Name</label>
+                            <input type="text" id="dashboardEventName" class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent" placeholder="Enter event name" required>
+                        </div>
+                        
+                        <div>
+                            <label class="block text-sm font-semibold text-gray-700 mb-2">Location</label>
+                            <input type="text" id="dashboardEventLocation" class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent" placeholder="Enter event location" required>
+                        </div>
+                        
+                        <div>
+                            <label class="block text-sm font-semibold text-gray-700 mb-2">Description</label>
+                            <textarea id="dashboardEventDescription" rows="4" class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent" placeholder="Enter event description" required></textarea>
+                        </div>
+                        
+                        <div class="flex justify-end space-x-4 pt-4">
+                            <button type="button" id="cancelDashboardEvent" class="px-6 py-3 bg-gray-200 text-gray-700 rounded-lg font-semibold hover:bg-gray-300 transition-colors">
+                                Cancel
+                            </button>
+                            <button type="submit" class="px-6 py-3 bg-blue-600 text-white rounded-lg font-semibold hover:bg-blue-700 transition-colors">
+                                Save Event
+                            </button>
+                        </div>
+                    </form>
+                </div>
+
+                <!-- User Creation Form Container -->
+                <div id="userFormContainer" class="bg-white rounded-lg shadow-lg p-6 mt-8 hidden">
+                    <div class="mb-6">
+                        <h3 class="text-lg font-semibold text-gray-800 mb-2">Add New User</h3>
+                        <p class="text-sm text-gray-600">Fill out the form below to add a new user to the system</p>
+                    </div>
+                    
+                    <form id="dashboardUserForm" class="space-y-6">
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                            <div>
+                                <label class="block text-sm font-semibold text-gray-700 mb-2">First Name</label>
+                                <input type="text" id="dashboardUserFirstName" class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent" placeholder="Enter first name" required>
+                            </div>
+                            <div>
+                                <label class="block text-sm font-semibold text-gray-700 mb-2">Last Name</label>
+                                <input type="text" id="dashboardUserLastName" class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent" placeholder="Enter last name" required>
+                            </div>
+                        </div>
+                        
+                        <div>
+                            <label class="block text-sm font-semibold text-gray-700 mb-2">Email</label>
+                            <input type="email" id="dashboardUserEmail" class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent" placeholder="Enter email address" required>
+                        </div>
+                        
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                            <div>
+                                <label class="block text-sm font-semibold text-gray-700 mb-2">Role</label>
+                                <select id="dashboardUserRole" class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent">
+                                    <option value="">Select role</option>
+                                    <option value="member">Member</option>
+                                    <option value="volunteer">Volunteer</option>
+                                    <option value="staff">Staff</option>
+                                    <option value="admin">Admin</option>
+                                </select>
+                            </div>
+                            <div>
+                                <label class="block text-sm font-semibold text-gray-700 mb-2">Status</label>
+                                <select id="dashboardUserStatus" class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent">
+                                    <option value="">Select status</option>
+                                    <option value="active">Active</option>
+                                    <option value="inactive">Inactive</option>
+                                    <option value="pending">Pending</option>
+                                </select>
+                            </div>
+                        </div>
+                        
+                        <div class="flex justify-end space-x-4 pt-4">
+                            <button type="button" id="cancelDashboardUser" class="px-6 py-3 bg-gray-200 text-gray-700 rounded-lg font-semibold hover:bg-gray-300 transition-colors">
+                                Cancel
+                            </button>
+                            <button type="submit" class="px-6 py-3 bg-blue-600 text-white rounded-lg font-semibold hover:bg-blue-700 transition-colors">
+                                Save User
+                            </button>
+                        </div>
+                    </form>
+                </div>
+            </section>
+
+            <!-- User Management Section -->
+            <section id="users-section" class="admin-section hidden">
+                <!-- Registered Users Container -->
+                <div class="bg-white rounded-lg shadow-lg p-6 mt-8">
+                    <div class="flex justify-between items-center mb-6">
+                        <div>
+                            <h2 class="text-2xl font-bold text-gray-800">Registered Users</h2>
+                            <p class="text-gray-600">Manage all registered users, roles, and permissions</p>
+                        </div>
+                        <button id="addUserBtn" class="px-4 py-2 bg-red-cross-blue text-white rounded-lg hover:bg-red-cross-secondary-blue transition-colors" onclick="showUserManagementForm()">
+                            <i class="fas fa-plus mr-2"></i>Add New User
+                        </button>
+                    </div>
+
+                    <!-- Search and Filter Controls -->
+                    <div class="mb-6">
+                        <div class="flex flex-col md:flex-row md:items-center space-y-4 md:space-y-0 md:space-x-4">
+                            <div class="relative">
+                                <input type="text" id="userSearch" placeholder="Search users..." class="pl-10 pr-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-red-cross-blue focus:border-transparent" onkeyup="filterUsers()">
+                                <i class="fas fa-search absolute left-3 top-3 text-gray-400"></i>
+                            </div>
+                            <select id="userRoleFilter" class="px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-red-cross-blue focus:border-transparent" onchange="filterUsers()">
+                                <option value="">All Roles</option>
+                                <option value="admin">Admin</option>
+                                <option value="staff">Staff</option>
+                                <option value="volunteer">Volunteer</option>
+                                <option value="member">Member</option>
+                            </select>
+                            <select id="userStatusFilter" class="px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-red-cross-blue focus:border-transparent" onchange="filterUsers()">
+                                <option value="">All Status</option>
+                                <option value="active">Active</option>
+                                <option value="inactive">Inactive</option>
+                                <option value="pending">Pending</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <!-- Users Table -->
+                    <div class="overflow-x-auto">
+                        <table class="min-w-full divide-y divide-gray-200">
+                            <thead class="bg-gray-50">
+                                <tr>
+                                    <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                                        <input type="checkbox" class="rounded border-gray-300 text-red-cross-blue focus:ring-red-cross-blue">
+                                    </th>
+                                    <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">User</th>
+                                    <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Email</th>
+                                    <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Role</th>
+                                    <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Status</th>
+                                    <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Last Active</th>
+                                    <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Actions</th>
+                                </tr>
+                            </thead>
+                            <tbody id="usersTableBody" class="bg-white divide-y divide-gray-200">
+                                <!-- Sample Users -->
+                                <tr class="hover:bg-gray-50">
+                                    <td class="px-6 py-4 whitespace-nowrap">
+                                        <input type="checkbox" class="rounded border-gray-300 text-red-cross-blue focus:ring-red-cross-blue">
+                                    </td>
+                                    <td class="px-6 py-4 whitespace-nowrap">
+                                        <div class="flex items-center">
+                                            <div class="w-10 h-10 bg-red-cross-blue rounded-full flex items-center justify-center">
+                                                <span class="text-white font-medium text-sm">MS</span>
+                                            </div>
+                                            <div class="ml-4">
+                                                <div class="text-sm font-medium text-gray-900">Maria Santos</div>
+                                                <div class="text-sm text-gray-500">ID: #1001</div>
+                                            </div>
+                                        </div>
+                                    </td>
+                                    <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">maria.santos@email.com</td>
+                                    <td class="px-6 py-4 whitespace-nowrap">
+                                        <span class="px-2 py-1 text-xs font-medium bg-blue-100 text-blue-800 rounded-full">Volunteer</span>
+                                    </td>
+                                    <td class="px-6 py-4 whitespace-nowrap">
+                                        <span class="px-2 py-1 text-xs font-medium bg-green-100 text-green-800 rounded-full">Active</span>
+                                    </td>
+                                    <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">2 hours ago</td>
+                                    <td class="px-6 py-4 whitespace-nowrap text-sm font-medium">
+                                        <button onclick="editUser(1)" class="text-red-cross-blue hover:text-red-cross-secondary-blue mr-3">Edit</button>
+                                        <button onclick="toggleUserStatus(1)" class="text-yellow-600 hover:text-yellow-700 mr-3">Toggle</button>
+                                        <button onclick="deleteUser(1)" class="text-red-600 hover:text-red-700">Delete</button>
+                                    </td>
+                                </tr>
+                                <tr class="hover:bg-gray-50">
+                                    <td class="px-6 py-4 whitespace-nowrap">
+                                        <input type="checkbox" class="rounded border-gray-300 text-red-cross-blue focus:ring-red-cross-blue">
+                                    </td>
+                                    <td class="px-6 py-4 whitespace-nowrap">
+                                        <div class="flex items-center">
+                                            <div class="w-10 h-10 bg-green-500 rounded-full flex items-center justify-center">
+                                                <span class="text-white font-medium text-sm">JD</span>
+                                            </div>
+                                            <div class="ml-4">
+                                                <div class="text-sm font-medium text-gray-900">John Doe</div>
+                                                <div class="text-sm text-gray-500">ID: #1002</div>
+                                            </div>
+                                        </div>
+                                    </td>
+                                    <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">john.doe@email.com</td>
+                                    <td class="px-6 py-4 whitespace-nowrap">
+                                        <span class="px-2 py-1 text-xs font-medium bg-purple-100 text-purple-800 rounded-full">Staff</span>
+                                    </td>
+                                    <td class="px-6 py-4 whitespace-nowrap">
+                                        <span class="px-2 py-1 text-xs font-medium bg-green-100 text-green-800 rounded-full">Active</span>
+                                    </td>
+                                    <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">1 day ago</td>
+                                    <td class="px-6 py-4 whitespace-nowrap text-sm font-medium">
+                                        <button onclick="editUser(2)" class="text-red-cross-blue hover:text-red-cross-secondary-blue mr-3">Edit</button>
+                                        <button onclick="toggleUserStatus(2)" class="text-yellow-600 hover:text-yellow-700 mr-3">Toggle</button>
+                                        <button onclick="deleteUser(2)" class="text-red-600 hover:text-red-700">Delete</button>
+                                    </td>
+                                </tr>
+                                <tr class="hover:bg-gray-50">
+                                    <td class="px-6 py-4 whitespace-nowrap">
+                                        <input type="checkbox" class="rounded border-gray-300 text-red-cross-blue focus:ring-red-cross-blue">
+                                    </td>
+                                    <td class="px-6 py-4 whitespace-nowrap">
+                                        <div class="flex items-center">
+                                            <div class="w-10 h-10 bg-yellow-500 rounded-full flex items-center justify-center">
+                                                <span class="text-white font-medium text-sm">AS</span>
+                                            </div>
+                                            <div class="ml-4">
+                                                <div class="text-sm font-medium text-gray-900">Anna Smith</div>
+                                                <div class="text-sm text-gray-500">ID: #1003</div>
+                                            </div>
+                                        </div>
+                                    </td>
+                                    <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">anna.smith@email.com</td>
+                                    <td class="px-6 py-4 whitespace-nowrap">
+                                        <span class="px-2 py-1 text-xs font-medium bg-green-100 text-green-800 rounded-full">Volunteer</span>
+                                    </td>
+                                    <td class="px-6 py-4 whitespace-nowrap">
+                                        <span class="px-2 py-1 text-xs font-medium bg-yellow-100 text-yellow-800 rounded-full">Pending</span>
+                                    </td>
+                                    <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">3 days ago</td>
+                                    <td class="px-6 py-4 whitespace-nowrap text-sm font-medium">
+                                        <button onclick="editUser(3)" class="text-red-cross-blue hover:text-red-cross-secondary-blue mr-3">Edit</button>
+                                        <button onclick="toggleUserStatus(3)" class="text-yellow-600 hover:text-yellow-700 mr-3">Toggle</button>
+                                        <button onclick="deleteUser(3)" class="text-red-600 hover:text-red-700">Delete</button>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+
+                <!-- User Statistics -->
+                <div class="grid grid-cols-1 md:grid-cols-4 gap-6 mt-6">
+                    <div class="bg-white p-6 rounded-lg shadow-sm border border-gray-200">
+                        <div class="flex items-center">
+                            <div class="p-3 bg-blue-100 rounded-lg">
+                                <i class="fas fa-users text-blue-600 text-xl"></i>
+                            </div>
+                            <div class="ml-4">
+                                <p class="text-sm font-medium text-gray-600">Total Users</p>
+                                <p class="text-2xl font-bold text-gray-900">2,847</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="bg-white p-6 rounded-lg shadow-sm border border-gray-200">
+                        <div class="flex items-center">
+                            <div class="p-3 bg-green-100 rounded-lg">
+                                <i class="fas fa-user-check text-green-600 text-xl"></i>
+                            </div>
+                            <div class="ml-4">
+                                <p class="text-sm font-medium text-gray-600">Active Users</p>
+                                <p class="text-2xl font-bold text-gray-900">2,234</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="bg-white p-6 rounded-lg shadow-sm border border-gray-200">
+                        <div class="flex items-center">
+                            <div class="p-3 bg-yellow-100 rounded-lg">
+                                <i class="fas fa-user-clock text-yellow-600 text-xl"></i>
+                            </div>
+                            <div class="ml-4">
+                                <p class="text-sm font-medium text-gray-600">Pending</p>
+                                <p class="text-2xl font-bold text-gray-900">156</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="bg-white p-6 rounded-lg shadow-sm border border-gray-200">
+                        <div class="flex items-center">
+                            <div class="p-3 bg-red-100 rounded-lg">
+                                <i class="fas fa-user-times text-red-600 text-xl"></i>
+                            </div>
+                            <div class="ml-4">
+                                <p class="text-sm font-medium text-gray-600">Inactive</p>
+                                <p class="text-2xl font-bold text-gray-900">457</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- User Management Form Container -->
+                <div id="userManagementFormContainer" class="bg-white rounded-lg shadow-lg p-6 mt-8 hidden">
+                    <div class="mb-6">
+                        <h3 class="text-lg font-semibold text-gray-800 mb-2">Add New User</h3>
+                        <p class="text-sm text-gray-600">Fill out the form below to add a new user to the system</p>
+                    </div>
+                    
+                    <form id="userManagementForm" class="space-y-6">
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                            <div>
+                                <label class="block text-sm font-semibold text-gray-700 mb-2">First Name</label>
+                                <input type="text" id="userManagementFirstName" class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent" placeholder="Enter first name" required>
+                            </div>
+                            <div>
+                                <label class="block text-sm font-semibold text-gray-700 mb-2">Last Name</label>
+                                <input type="text" id="userManagementLastName" class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent" placeholder="Enter last name" required>
+                            </div>
+                        </div>
+                        
+                        <div>
+                            <label class="block text-sm font-semibold text-gray-700 mb-2">Email</label>
+                            <input type="email" id="userManagementEmail" class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent" placeholder="Enter email address" required>
+                        </div>
+                        
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                            <div>
+                                <label class="block text-sm font-semibold text-gray-700 mb-2">Role</label>
+                                <select id="userManagementRole" class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent">
+                                    <option value="">Select role</option>
+                                    <option value="member">Member</option>
+                                    <option value="volunteer">Volunteer</option>
+                                    <option value="staff">Staff</option>
+                                    <option value="admin">Admin</option>
+                                </select>
+                            </div>
+                            <div>
+                                <label class="block text-sm font-semibold text-gray-700 mb-2">Status</label>
+                                <select id="userManagementStatus" class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent">
+                                    <option value="">Select status</option>
+                                    <option value="active">Active</option>
+                                    <option value="inactive">Inactive</option>
+                                    <option value="pending">Pending</option>
+                                </select>
+                            </div>
+                        </div>
+                        
+                        <div class="flex justify-end space-x-4 pt-4">
+                            <button type="button" id="cancelUserManagement" class="px-6 py-3 bg-gray-200 text-gray-700 rounded-lg font-semibold hover:bg-gray-300 transition-colors">
+                                Cancel
+                            </button>
+                            <button type="submit" class="px-6 py-3 bg-blue-600 text-white rounded-lg font-semibold hover:bg-blue-700 transition-colors">
+                                Save User
+                            </button>
+                        </div>
+                    </form>
+                </div>
+            </section>
+
+            <!-- Event Management Section -->
+            <section id="events-section" class="admin-section hidden">
+                <!-- Event Calendar & List Container -->
+                <div class="bg-white rounded-lg shadow-lg p-6 mt-8">
+                    <div class="flex justify-between items-center mb-6">
+                        <div>
+                            <h2 class="text-2xl font-bold text-gray-800">Event Calendar & List</h2>
+                            <p class="text-gray-600">Create, edit, and manage all Red Cross events</p>
+                        </div>
+                        <button id="addEventBtn" class="px-4 py-2 bg-red-cross-blue text-white rounded-lg hover:bg-red-cross-secondary-blue transition-colors" onclick="showEventManagementForm()">
+                            <i class="fas fa-plus mr-2"></i>Create Event
+                        </button>
+                    </div>
+
+                    <!-- Search and Filter Controls -->
+                    <div class="mb-6">
+                        <div class="flex flex-col md:flex-row md:items-center space-y-4 md:space-y-0 md:space-x-4">
+                            <div class="relative">
+                                <input type="text" id="eventSearch" placeholder="Search events..." class="pl-10 pr-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-red-cross-blue focus:border-transparent" onkeyup="filterEvents()">
+                                <i class="fas fa-search absolute left-3 top-3 text-gray-400"></i>
+                            </div>
+                            <select id="eventStatusFilter" class="px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-red-cross-blue focus:border-transparent" onchange="filterEvents()">
+                                <option value="">All Status</option>
+                                <option value="upcoming">Upcoming</option>
+                                <option value="ongoing">Ongoing</option>
+                                <option value="completed">Completed</option>
+                                <option value="cancelled">Cancelled</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <!-- Events Grid -->
+                    <div id="eventsGrid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                    <!-- Blood Drive Event -->
+                    <div class="bg-white rounded-lg shadow-lg p-6 border-l-4 border-red-500">
+                        <div class="flex justify-between items-start mb-4">
+                            <h3 class="text-lg font-semibold text-gray-900">Blood Drive 2024</h3>
+                            <span class="px-2 py-1 text-xs font-medium bg-red-100 text-red-800 rounded-full">Upcoming</span>
+                        </div>
+                        <p class="text-gray-600 text-sm mb-4">Community blood donation drive at SM Mall of Asia</p>
+                        <div class="space-y-2 mb-4">
+                            <div class="flex items-center text-sm text-gray-500">
+                                <i class="fas fa-map-marker-alt mr-2"></i>
+                                <span>SM Mall of Asia, Pasay City</span>
+                            </div>
+                            <div class="flex items-center text-sm text-gray-500">
+                                <i class="fas fa-users mr-2"></i>
+                                <span>150 volunteers registered</span>
+                            </div>
+                        </div>
+                        <div class="flex justify-between items-center">
+                            <div class="flex space-x-2">
+                                <button onclick="editEvent(1)" class="text-red-cross-blue hover:text-red-cross-secondary-blue text-sm">Edit</button>
+                                <button onclick="deleteEvent(1)" class="text-red-600 hover:text-red-700 text-sm">Delete</button>
+                            </div>
+                            <button onclick="viewEventDetails(1)" class="bg-red-cross-blue text-white px-3 py-1 rounded text-sm hover:bg-red-cross-secondary-blue transition-colors">
+                                View Details
+                            </button>
+                        </div>
+                    </div>
+
+                    <!-- Disaster Relief Training -->
+                    <div class="bg-white rounded-lg shadow-lg p-6 border-l-4 border-blue-500">
+                        <div class="flex justify-between items-start mb-4">
+                            <h3 class="text-lg font-semibold text-gray-900">Disaster Relief Training</h3>
+                            <span class="px-2 py-1 text-xs font-medium bg-blue-100 text-blue-800 rounded-full">Ongoing</span>
+                        </div>
+                        <p class="text-gray-600 text-sm mb-4">Emergency response training for volunteers</p>
+                        <div class="space-y-2 mb-4">
+                            <div class="flex items-center text-sm text-gray-500">
+                                <i class="fas fa-map-marker-alt mr-2"></i>
+                                <span>Red Cross Headquarters, Manila</span>
+                            </div>
+                            <div class="flex items-center text-sm text-gray-500">
+                                <i class="fas fa-users mr-2"></i>
+                                <span>75 participants</span>
+                            </div>
+                        </div>
+                        <div class="flex justify-between items-center">
+                            <div class="flex space-x-2">
+                                <button onclick="editEvent(2)" class="text-red-cross-blue hover:text-red-cross-secondary-blue text-sm">Edit</button>
+                                <button onclick="deleteEvent(2)" class="text-red-600 hover:text-red-700 text-sm">Delete</button>
+                            </div>
+                            <button onclick="viewEventDetails(2)" class="bg-red-cross-blue text-white px-3 py-1 rounded text-sm hover:bg-red-cross-secondary-blue transition-colors">
+                                View Details
+                            </button>
+                        </div>
+                    </div>
+
+                    <!-- First Aid Workshop -->
+                    <div class="bg-white rounded-lg shadow-lg p-6 border-l-4 border-green-500">
+                        <div class="flex justify-between items-start mb-4">
+                            <h3 class="text-lg font-semibold text-gray-900">First Aid Workshop</h3>
+                            <span class="px-2 py-1 text-xs font-medium bg-green-100 text-green-800 rounded-full">Completed</span>
+                        </div>
+                        <p class="text-gray-600 text-sm mb-4">Basic first aid training for community members</p>
+                        <div class="space-y-2 mb-4">
+                            <div class="flex items-center text-sm text-gray-500">
+                                <i class="fas fa-map-marker-alt mr-2"></i>
+                                <span>Quezon City Hall</span>
+                            </div>
+                            <div class="flex items-center text-sm text-gray-500">
+                                <i class="fas fa-users mr-2"></i>
+                                <span>120 participants</span>
+                            </div>
+                        </div>
+                        <div class="flex justify-between items-center">
+                            <div class="flex space-x-2">
+                                <button onclick="editEvent(3)" class="text-red-cross-blue hover:text-red-cross-secondary-blue text-sm">Edit</button>
+                                <button onclick="deleteEvent(3)" class="text-red-600 hover:text-red-700 text-sm">Delete</button>
+                            </div>
+                            <button onclick="viewEventDetails(3)" class="bg-red-cross-blue text-white px-3 py-1 rounded text-sm hover:bg-red-cross-secondary-blue transition-colors">
+                                View Details
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Event Statistics -->
+                <div class="grid grid-cols-1 md:grid-cols-4 gap-6 mt-6">
+                    <div class="bg-white p-6 rounded-lg shadow-sm border border-gray-200">
+                        <div class="flex items-center">
+                            <div class="p-3 bg-blue-100 rounded-lg">
+                                <i class="fas fa-calendar-alt text-blue-600 text-xl"></i>
+                            </div>
+                            <div class="ml-4">
+                                <p class="text-sm font-medium text-gray-600">Total Events</p>
+                                <p class="text-2xl font-bold text-gray-900">23</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="bg-white p-6 rounded-lg shadow-sm border border-gray-200">
+                        <div class="flex items-center">
+                            <div class="p-3 bg-red-100 rounded-lg">
+                                <i class="fas fa-calendar-plus text-red-600 text-xl"></i>
+                            </div>
+                            <div class="ml-4">
+                                <p class="text-sm font-medium text-gray-600">Upcoming</p>
+                                <p class="text-2xl font-bold text-gray-900">5</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="bg-white p-6 rounded-lg shadow-sm border border-gray-200">
+                        <div class="flex items-center">
+                            <div class="p-3 bg-blue-100 rounded-lg">
+                                <i class="fas fa-clock text-blue-600 text-xl"></i>
+                            </div>
+                            <div class="ml-4">
+                                <p class="text-sm font-medium text-gray-600">Ongoing</p>
+                                <p class="text-2xl font-bold text-gray-900">2</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="bg-white p-6 rounded-lg shadow-sm border border-gray-200">
+                        <div class="flex items-center">
+                            <div class="p-3 bg-green-100 rounded-lg">
+                                <i class="fas fa-check-circle text-green-600 text-xl"></i>
+                            </div>
+                            <div class="ml-4">
+                                <p class="text-sm font-medium text-gray-600">Completed</p>
+                                <p class="text-2xl font-bold text-gray-900">16</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Event Management Form Container -->
+                <div id="eventManagementFormContainer" class="bg-white rounded-lg shadow-lg p-6 mt-8 hidden">
+                    <div class="mb-6">
+                        <h3 class="text-lg font-semibold text-gray-800 mb-2">Create New Event</h3>
+                        <p class="text-sm text-gray-600">Fill out the form below to create a new Red Cross event</p>
+                    </div>
+                    
+                    <form id="eventManagementForm" class="space-y-6">
+                        <div>
+                            <label class="block text-sm font-semibold text-gray-700 mb-2">Event Name</label>
+                            <input type="text" id="eventManagementName" class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent" placeholder="Enter event name" required>
+                        </div>
+                        
+                        <div>
+                            <label class="block text-sm font-semibold text-gray-700 mb-2">Location</label>
+                            <input type="text" id="eventManagementLocation" class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent" placeholder="Enter event location" required>
+                        </div>
+                        
+                        <div>
+                            <label class="block text-sm font-semibold text-gray-700 mb-2">Description</label>
+                            <textarea id="eventManagementDescription" rows="4" class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent" placeholder="Enter event description" required></textarea>
+                        </div>
+                        
+                        <div class="flex justify-end space-x-4 pt-4">
+                            <button type="button" id="cancelEventManagement" class="px-6 py-3 bg-gray-200 text-gray-700 rounded-lg font-semibold hover:bg-gray-300 transition-colors">
+                                Cancel
+                            </button>
+                            <button type="submit" class="px-6 py-3 bg-blue-600 text-white rounded-lg font-semibold hover:bg-blue-700 transition-colors">
+                                Save Event
+                            </button>
+                        </div>
+                    </form>
+                </div>
+            </section>
+
+            <!-- Volunteer Management Section -->
+            <section id="volunteers-section" class="admin-section hidden">
+                <!-- Volunteer & Staff Directory Container -->
+                <div class="bg-white rounded-lg shadow-lg p-6 mt-8">
+                    <div class="flex justify-between items-center mb-6">
+                        <div>
+                            <h2 class="text-2xl font-bold text-gray-800">Volunteer & Staff Directory</h2>
+                            <p class="text-gray-600">Manage volunteers, staff, and their assignments</p>
+                        </div>
+                        <button id="addVolunteerBtn" class="px-4 py-2 bg-red-cross-blue text-white rounded-lg hover:bg-red-cross-secondary-blue transition-colors" onclick="showVolunteerStaffForm()">
+                            <i class="fas fa-plus mr-2"></i>Add New Volunteer/Staff
+                        </button>
+                    </div>
+
+                    <!-- Search and Filter Controls -->
+                    <div class="mb-6">
+                        <div class="flex flex-col md:flex-row md:items-center space-y-4 md:space-y-0 md:space-x-4">
+                            <div class="relative">
+                                <input type="text" id="volunteerSearch" placeholder="Search volunteers..." class="pl-10 pr-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-red-cross-blue focus:border-transparent" onkeyup="filterVolunteers()">
+                                <i class="fas fa-search absolute left-3 top-3 text-gray-400"></i>
+                            </div>
+                            <select id="volunteerStatusFilter" class="px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-red-cross-blue focus:border-transparent" onchange="filterVolunteers()">
+                                <option value="">All Status</option>
+                                <option value="active">Active</option>
+                                <option value="inactive">Inactive</option>
+                                <option value="pending">Pending</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <!-- Volunteers Table -->
+                    <div class="overflow-x-auto">
+                        <table class="min-w-full divide-y divide-gray-200">
+                            <thead class="bg-gray-50">
+                                <tr>
+                                    <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Volunteer</th>
+                                    <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Role</th>
+                                    <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Status</th>
+                                    <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Assigned Tasks</th>
+                                    <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Actions</th>
+                                </tr>
+                            </thead>
+                            <tbody id="volunteersTableBody" class="bg-white divide-y divide-gray-200">
+                                <!-- Sample Volunteers -->
+                                <tr class="hover:bg-gray-50">
+                                    <td class="px-6 py-4 whitespace-nowrap">
+                                        <div class="flex items-center">
+                                            <div class="w-10 h-10 bg-red-cross-blue rounded-full flex items-center justify-center">
+                                                <span class="text-white font-medium text-sm">MS</span>
+                                            </div>
+                                            <div class="ml-4">
+                                                <div class="text-sm font-medium text-gray-900">Maria Santos</div>
+                                                <div class="text-sm text-gray-500">maria.santos@email.com</div>
+                                            </div>
+                                        </div>
+                                    </td>
+                                    <td class="px-6 py-4 whitespace-nowrap">
+                                        <span class="px-2 py-1 text-xs font-medium bg-blue-100 text-blue-800 rounded-full">Volunteer</span>
+                                    </td>
+                                    <td class="px-6 py-4 whitespace-nowrap">
+                                        <span class="px-2 py-1 text-xs font-medium bg-green-100 text-green-800 rounded-full">Active</span>
+                                    </td>
+                                    <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">Blood Drive Coordinator</td>
+                                    <td class="px-6 py-4 whitespace-nowrap text-sm font-medium">
+                                        <button onclick="editVolunteer(1)" class="text-red-cross-blue hover:text-red-cross-secondary-blue mr-3">Edit</button>
+                                        <button onclick="toggleVolunteerStatus(1)" class="text-yellow-600 hover:text-yellow-700 mr-3">Toggle</button>
+                                        <button onclick="deleteVolunteer(1)" class="text-red-600 hover:text-red-700">Delete</button>
+                                    </td>
+                                </tr>
+                                <tr class="hover:bg-gray-50">
+                                    <td class="px-6 py-4 whitespace-nowrap">
+                                        <div class="flex items-center">
+                                            <div class="w-10 h-10 bg-green-500 rounded-full flex items-center justify-center">
+                                                <span class="text-white font-medium text-sm">JD</span>
+                                            </div>
+                                            <div class="ml-4">
+                                                <div class="text-sm font-medium text-gray-900">John Doe</div>
+                                                <div class="text-sm text-gray-500">john.doe@email.com</div>
+                                            </div>
+                                        </div>
+                                    </td>
+                                    <td class="px-6 py-4 whitespace-nowrap">
+                                        <span class="px-2 py-1 text-xs font-medium bg-purple-100 text-purple-800 rounded-full">Staff</span>
+                                    </td>
+                                    <td class="px-6 py-4 whitespace-nowrap">
+                                        <span class="px-2 py-1 text-xs font-medium bg-green-100 text-green-800 rounded-full">Active</span>
+                                    </td>
+                                    <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">Event Manager</td>
+                                    <td class="px-6 py-4 whitespace-nowrap text-sm font-medium">
+                                        <button onclick="editVolunteer(2)" class="text-red-cross-blue hover:text-red-cross-secondary-blue mr-3">Edit</button>
+                                        <button onclick="toggleVolunteerStatus(2)" class="text-yellow-600 hover:text-yellow-700 mr-3">Toggle</button>
+                                        <button onclick="deleteVolunteer(2)" class="text-red-600 hover:text-red-700">Delete</button>
+                                    </td>
+                                </tr>
+                                <tr class="hover:bg-gray-50">
+                                    <td class="px-6 py-4 whitespace-nowrap">
+                                        <div class="flex items-center">
+                                            <div class="w-10 h-10 bg-yellow-500 rounded-full flex items-center justify-center">
+                                                <span class="text-white font-medium text-sm">AS</span>
+                                            </div>
+                                            <div class="ml-4">
+                                                <div class="text-sm font-medium text-gray-900">Anna Smith</div>
+                                                <div class="text-sm text-gray-500">anna.smith@email.com</div>
+                                            </div>
+                                        </div>
+                                    </td>
+                                    <td class="px-6 py-4 whitespace-nowrap">
+                                        <span class="px-2 py-1 text-xs font-medium bg-green-100 text-green-800 rounded-full">Volunteer</span>
+                                    </td>
+                                    <td class="px-6 py-4 whitespace-nowrap">
+                                        <span class="px-2 py-1 text-xs font-medium bg-yellow-100 text-yellow-800 rounded-full">Pending</span>
+                                    </td>
+                                    <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">First Aid Assistant</td>
+                                    <td class="px-6 py-4 whitespace-nowrap text-sm font-medium">
+                                        <button onclick="editVolunteer(3)" class="text-red-cross-blue hover:text-red-cross-secondary-blue mr-3">Edit</button>
+                                        <button onclick="toggleVolunteerStatus(3)" class="text-yellow-600 hover:text-yellow-700 mr-3">Toggle</button>
+                                        <button onclick="deleteVolunteer(3)" class="text-red-600 hover:text-red-700">Delete</button>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+
+                <!-- Volunteer Statistics -->
+                <div class="grid grid-cols-1 md:grid-cols-4 gap-6 mt-6">
+                    <div class="bg-white p-6 rounded-lg shadow-sm border border-gray-200">
+                        <div class="flex items-center">
+                            <div class="p-3 bg-green-100 rounded-lg">
+                                <i class="fas fa-hands-helping text-green-600 text-xl"></i>
+                            </div>
+                            <div class="ml-4">
+                                <p class="text-sm font-medium text-gray-600">Total Volunteers</p>
+                                <p class="text-2xl font-bold text-gray-900">1,234</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="bg-white p-6 rounded-lg shadow-sm border border-gray-200">
+                        <div class="flex items-center">
+                            <div class="p-3 bg-blue-100 rounded-lg">
+                                <i class="fas fa-user-check text-blue-600 text-xl"></i>
+                            </div>
+                            <div class="ml-4">
+                                <p class="text-sm font-medium text-gray-600">Active</p>
+                                <p class="text-2xl font-bold text-gray-900">1,156</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="bg-white p-6 rounded-lg shadow-sm border border-gray-200">
+                        <div class="flex items-center">
+                            <div class="p-3 bg-yellow-100 rounded-lg">
+                                <i class="fas fa-user-clock text-yellow-600 text-xl"></i>
+                            </div>
+                            <div class="ml-4">
+                                <p class="text-sm font-medium text-gray-600">Pending</p>
+                                <p class="text-2xl font-bold text-gray-900">45</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="bg-white p-6 rounded-lg shadow-sm border border-gray-200">
+                        <div class="flex items-center">
+                            <div class="p-3 bg-red-100 rounded-lg">
+                                <i class="fas fa-user-times text-red-600 text-xl"></i>
+                            </div>
+                            <div class="ml-4">
+                                <p class="text-sm font-medium text-gray-600">Inactive</p>
+                                <p class="text-2xl font-bold text-gray-900">33</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Volunteer & Staff Form Container -->
+                <div id="volunteerStaffFormContainer" class="bg-white rounded-lg shadow-lg p-6 mt-8 hidden">
+                    <div class="mb-6">
+                        <h3 class="text-lg font-semibold text-gray-800 mb-2">Add New Volunteer/Staff</h3>
+                        <p class="text-sm text-gray-600">Fill out the form below to add a new volunteer or staff member</p>
+                    </div>
+                    
+                    <form id="volunteerStaffForm" class="space-y-6">
+                        <div>
+                            <label class="block text-sm font-semibold text-gray-700 mb-2">Full Name</label>
+                            <input type="text" id="volunteerStaffName" class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent" placeholder="Enter full name" required>
+                        </div>
+                        
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                            <div>
+                                <label class="block text-sm font-semibold text-gray-700 mb-2">Role/Position</label>
+                                <select id="volunteerStaffRole" class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent">
+                                    <option value="">Select role</option>
+                                    <option value="volunteer">Volunteer</option>
+                                    <option value="staff">Staff</option>
+                                    <option value="coordinator">Coordinator</option>
+                                    <option value="supervisor">Supervisor</option>
+                                </select>
+                            </div>
+                            <div>
+                                <label class="block text-sm font-semibold text-gray-700 mb-2">Contact Information</label>
+                                <input type="text" id="volunteerStaffContact" class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent" placeholder="Phone/Email" required>
+                            </div>
+                        </div>
+                        
+                        <div>
+                            <label class="block text-sm font-semibold text-gray-700 mb-2">Availability</label>
+                            <input type="text" id="volunteerStaffAvailability" class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent" placeholder="e.g., Weekends, Evenings, Weekdays" required>
+                        </div>
+                        
+                        <div>
+                            <label class="block text-sm font-semibold text-gray-700 mb-2">Notes</label>
+                            <textarea id="volunteerStaffNotes" rows="4" class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent" placeholder="Additional notes or special skills"></textarea>
+                        </div>
+                        
+                        <div class="flex justify-end space-x-4 pt-4">
+                            <button type="button" id="cancelVolunteerStaff" class="px-6 py-3 bg-gray-200 text-gray-700 rounded-lg font-semibold hover:bg-gray-300 transition-colors">
+                                Cancel
+                            </button>
+                            <button type="submit" class="px-6 py-3 bg-blue-600 text-white rounded-lg font-semibold hover:bg-blue-700 transition-colors">
+                                Save Volunteer/Staff
+                            </button>
+                        </div>
+                    </form>
+                </div>
+            </section>
+
+            <!-- Donation Tracking Section -->
+            <section id="donations-section" class="admin-section hidden">
+                <!-- Donation Tracking Header -->
+                <div class="bg-white rounded-lg shadow-lg p-6 mt-8 mb-6">
+                    <div class="flex justify-between items-center">
+                        <div>
+                            <h2 class="text-2xl font-bold text-gray-800">Donation Tracking</h2>
+                            <p class="text-gray-600">Monitor donations and financial contributions</p>
+                        </div>
+                        <button id="addDonationBtn" class="px-4 py-2 bg-red-cross-blue text-white rounded-lg hover:bg-red-cross-secondary-blue transition-colors" onclick="showDonationForm()">
+                            <i class="fas fa-plus mr-2"></i>Add Donation
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Donation Summary -->
+                <div class="bg-white rounded-lg shadow-lg p-6 mb-6">
+                    <div class="mb-6">
+                        <h3 class="text-lg font-semibold text-gray-800">Donation Overview</h3>
+                        <p class="text-sm text-gray-600">Key metrics and financial performance</p>
+                    </div>
+                    <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+                        <div class="bg-gray-50 rounded-lg p-6">
+                            <div class="flex items-center justify-between">
+                                <div>
+                                    <p class="text-sm font-medium text-gray-600">This Month</p>
+                                    <p class="text-2xl font-bold text-gray-800">₱245,000</p>
+                                </div>
+                                <i class="fas fa-calendar text-gray-400 text-2xl"></i>
+                            </div>
+                        </div>
+                        <div class="bg-gray-50 rounded-lg p-6">
+                            <div class="flex items-center justify-between">
+                                <div>
+                                    <p class="text-sm font-medium text-gray-600">Total Donations</p>
+                                    <p class="text-2xl font-bold text-gray-800">₱2.4M</p>
+                                </div>
+                                <i class="fas fa-donate text-gray-400 text-2xl"></i>
+                            </div>
+                        </div>
+                        <div class="bg-gray-50 rounded-lg p-6">
+                            <div class="flex items-center justify-between">
+                                <div>
+                                    <p class="text-sm font-medium text-gray-600">Average Donation</p>
+                                    <p class="text-2xl font-bold text-gray-800">₱1,250</p>
+                                </div>
+                                <i class="fas fa-chart-line text-gray-400 text-2xl"></i>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Recent Donations -->
+                <div class="bg-white rounded-lg shadow-lg overflow-hidden">
+                    <div class="px-6 py-4 border-b border-gray-200">
+                        <h3 class="text-lg font-semibold text-gray-800">Recent Donations</h3>
+                        <p class="text-sm text-gray-600">Latest financial contributions and donor information</p>
+                    </div>
+                    <div class="overflow-x-auto">
+                        <table class="min-w-full divide-y divide-gray-200">
+                            <thead class="bg-gray-50">
+                                <tr>
+                                    <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Donor</th>
+                                    <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Amount</th>
+                                    <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Method</th>
+                                    <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Date</th>
+                                    <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Status</th>
+                                    <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Actions</th>
+                                </tr>
+                            </thead>
+                            <tbody id="donationsTableBody" class="bg-white divide-y divide-gray-200">
+                                <!-- Sample Donations -->
+                                <tr class="hover:bg-gray-50">
+                                    <td class="px-6 py-4 whitespace-nowrap">
+                                        <div class="flex items-center">
+                                            <div class="w-10 h-10 bg-red-cross-blue rounded-full flex items-center justify-center">
+                                                <span class="text-white font-medium text-sm">MS</span>
+                                            </div>
+                                            <div class="ml-4">
+                                                <div class="text-sm font-medium text-gray-900">Maria Santos</div>
+                                                <div class="text-sm text-gray-500">maria.santos@email.com</div>
+                                            </div>
+                                        </div>
+                                    </td>
+                                    <td class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">₱5,000</td>
+                                    <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">Credit Card</td>
+                                    <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">2 hours ago</td>
+                                    <td class="px-6 py-4 whitespace-nowrap">
+                                        <span class="px-2 py-1 text-xs font-medium bg-green-100 text-green-800 rounded-full">Completed</span>
+                                    </td>
+                                    <td class="px-6 py-4 whitespace-nowrap text-sm font-medium">
+                                        <button onclick="viewDonationDetails(1)" class="text-red-cross-blue hover:text-red-cross-secondary-blue mr-3">View</button>
+                                        <button onclick="exportDonation(1)" class="text-green-600 hover:text-green-700">Export</button>
+                                    </td>
+                                </tr>
+                                <tr class="hover:bg-gray-50">
+                                    <td class="px-6 py-4 whitespace-nowrap">
+                                        <div class="flex items-center">
+                                            <div class="w-10 h-10 bg-green-500 rounded-full flex items-center justify-center">
+                                                <span class="text-white font-medium text-sm">JD</span>
+                                            </div>
+                                            <div class="ml-4">
+                                                <div class="text-sm font-medium text-gray-900">John Doe</div>
+                                                <div class="text-sm text-gray-500">john.doe@email.com</div>
+                                            </div>
+                                        </div>
+                                    </td>
+                                    <td class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">₱2,500</td>
+                                    <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">Bank Transfer</td>
+                                    <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">1 day ago</td>
+                                    <td class="px-6 py-4 whitespace-nowrap">
+                                        <span class="px-2 py-1 text-xs font-medium bg-green-100 text-green-800 rounded-full">Completed</span>
+                                    </td>
+                                    <td class="px-6 py-4 whitespace-nowrap text-sm font-medium">
+                                        <button onclick="viewDonationDetails(2)" class="text-red-cross-blue hover:text-red-cross-secondary-blue mr-3">View</button>
+                                        <button onclick="exportDonation(2)" class="text-green-600 hover:text-green-700">Export</button>
+                                    </td>
+                                </tr>
+                                <tr class="hover:bg-gray-50">
+                                    <td class="px-6 py-4 whitespace-nowrap">
+                                        <div class="flex items-center">
+                                            <div class="w-10 h-10 bg-yellow-500 rounded-full flex items-center justify-center">
+                                                <span class="text-white font-medium text-sm">AS</span>
+                                            </div>
+                                            <div class="ml-4">
+                                                <div class="text-sm font-medium text-gray-900">Anna Smith</div>
+                                                <div class="text-sm text-gray-500">anna.smith@email.com</div>
+                                            </div>
+                                        </div>
+                                    </td>
+                                    <td class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">₱1,000</td>
+                                    <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">PayPal</td>
+                                    <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">3 days ago</td>
+                                    <td class="px-6 py-4 whitespace-nowrap">
+                                        <span class="px-2 py-1 text-xs font-medium bg-yellow-100 text-yellow-800 rounded-full">Pending</span>
+                                    </td>
+                                    <td class="px-6 py-4 whitespace-nowrap text-sm font-medium">
+                                        <button onclick="viewDonationDetails(3)" class="text-red-cross-blue hover:text-red-cross-secondary-blue mr-3">View</button>
+                                        <button onclick="exportDonation(3)" class="text-green-600 hover:text-green-700">Export</button>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+
+                <!-- Donation Analytics -->
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mt-6">
+                    <div class="bg-white p-6 rounded-lg shadow-sm border border-gray-200">
+                        <div class="flex items-center">
+                            <div class="p-3 bg-green-100 rounded-lg">
+                                <i class="fas fa-donate text-green-600 text-xl"></i>
+                            </div>
+                            <div class="ml-4">
+                                <p class="text-sm font-medium text-gray-600">This Month</p>
+                                <p class="text-2xl font-bold text-gray-900">₱245,000</p>
+                                <p class="text-sm text-green-600">+15% from last month</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="bg-white p-6 rounded-lg shadow-sm border border-gray-200">
+                        <div class="flex items-center">
+                            <div class="p-3 bg-blue-100 rounded-lg">
+                                <i class="fas fa-chart-line text-blue-600 text-xl"></i>
+                            </div>
+                            <div class="ml-4">
+                                <p class="text-sm font-medium text-gray-600">Average Donation</p>
+                                <p class="text-2xl font-bold text-gray-900">₱1,250</p>
+                                <p class="text-sm text-blue-600">+8% from last month</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="bg-white p-6 rounded-lg shadow-sm border border-gray-200">
+                        <div class="flex items-center">
+                            <div class="p-3 bg-red-100 rounded-lg">
+                                <i class="fas fa-users text-red-600 text-xl"></i>
+                            </div>
+                            <div class="ml-4">
+                                <p class="text-sm font-medium text-gray-600">Total Donors</p>
+                                <p class="text-2xl font-bold text-gray-900">1,847</p>
+                                <p class="text-sm text-red-600">+12% from last month</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Donation Form Container -->
+                <div id="donationFormContainer" class="bg-white rounded-lg shadow-lg p-6 mt-8 hidden">
+                    <div class="mb-6">
+                        <h3 class="text-lg font-semibold text-gray-800 mb-2">Add New Donation</h3>
+                        <p class="text-sm text-gray-600">Fill out the form below to record a new donation</p>
+                    </div>
+                    
+                    <form id="donationForm" class="space-y-6">
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                            <div>
+                                <label class="block text-sm font-semibold text-gray-700 mb-2">Donor Name</label>
+                                <input type="text" id="donorName" class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent" placeholder="Enter donor name" required>
+                            </div>
+                            <div>
+                                <label class="block text-sm font-semibold text-gray-700 mb-2">Email</label>
+                                <input type="email" id="donorEmail" class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent" placeholder="Enter donor email" required>
+                            </div>
+                        </div>
+                        
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                            <div>
+                                <label class="block text-sm font-semibold text-gray-700 mb-2">Donation Amount</label>
+                                <input type="number" id="donationAmount" class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent" placeholder="Enter amount" step="0.01" required>
+                            </div>
+                            <div>
+                                <label class="block text-sm font-semibold text-gray-700 mb-2">Payment Method</label>
+                                <select id="paymentMethod" class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent" required>
+                                    <option value="">Select payment method</option>
+                                    <option value="credit-card">Credit Card</option>
+                                    <option value="bank-transfer">Bank Transfer</option>
+                                    <option value="paypal">PayPal</option>
+                                    <option value="cash">Cash</option>
+                                    <option value="check">Check</option>
+                                </select>
+                            </div>
+                        </div>
+                        
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                            <div>
+                                <label class="block text-sm font-semibold text-gray-700 mb-2">Date</label>
+                                <input type="date" id="donationDate" class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent" required>
+                            </div>
+                            <div>
+                                <label class="block text-sm font-semibold text-gray-700 mb-2">Status</label>
+                                <select id="donationStatus" class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent" required>
+                                    <option value="">Select status</option>
+                                    <option value="completed">Completed</option>
+                                    <option value="pending">Pending</option>
+                                    <option value="failed">Failed</option>
+                                </select>
+                            </div>
+                        </div>
+                        
+                        <div>
+                            <label class="block text-sm font-semibold text-gray-700 mb-2">Notes (Optional)</label>
+                            <textarea id="donationNotes" rows="4" class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent" placeholder="Additional notes about the donation"></textarea>
+                        </div>
+                        
+                        <div class="flex justify-end space-x-4 pt-4">
+                            <button type="button" id="cancelDonation" class="px-6 py-3 bg-gray-200 text-gray-700 rounded-lg font-semibold hover:bg-gray-300 transition-colors">
+                                Cancel
+                            </button>
+                            <button type="submit" class="px-6 py-3 bg-blue-600 text-white rounded-lg font-semibold hover:bg-blue-700 transition-colors">
+                                Save Donation
+                            </button>
+                        </div>
+                    </form>
+                </div>
+            </section>
+
+            <!-- Settings Section -->
+            <section id="settings-section" class="admin-section hidden">
+                <div class="mb-6">
+                    <h2 class="text-2xl font-bold text-gray-800 mb-2">System Settings</h2>
+                    <p class="text-gray-600">Configure system preferences and access controls</p>
+                </div>
+
+                <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
+                    <!-- Access Control Settings -->
+                    <div class="bg-white rounded-lg shadow-lg p-6">
+                        <h3 class="text-lg font-semibold text-gray-800 mb-4">Access Control</h3>
+                        <div class="space-y-4">
+                            <div class="flex items-center justify-between">
+                                <span class="text-sm font-medium text-gray-700">Admin Registration</span>
+                                <label class="relative inline-flex items-center cursor-pointer">
+                                    <input type="checkbox" class="sr-only peer" checked>
+                                    <div class="w-11 h-6 bg-gray-200 peer-focus:outline-none peer-focus:ring-4 peer-focus:ring-red-cross-blue/20 rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-red-cross-blue"></div>
+                                </label>
+                            </div>
+                            <div class="flex items-center justify-between">
+                                <span class="text-sm font-medium text-gray-700">Email Notifications</span>
+                                <label class="relative inline-flex items-center cursor-pointer">
+                                    <input type="checkbox" class="sr-only peer" checked>
+                                    <div class="w-11 h-6 bg-gray-200 peer-focus:outline-none peer-focus:ring-4 peer-focus:ring-red-cross-blue/20 rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-red-cross-blue"></div>
+                                </label>
+                            </div>
+                            <div class="flex items-center justify-between">
+                                <span class="text-sm font-medium text-gray-700">Two-Factor Authentication</span>
+                                <label class="relative inline-flex items-center cursor-pointer">
+                                    <input type="checkbox" class="sr-only peer">
+                                    <div class="w-11 h-6 bg-gray-200 peer-focus:outline-none peer-focus:ring-4 peer-focus:ring-red-cross-blue/20 rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-red-cross-blue"></div>
+                                </label>
+                            </div>
+                            <div class="flex items-center justify-between">
+                                <span class="text-sm font-medium text-gray-700">Session Timeout</span>
+                                <select class="px-3 py-1 border border-gray-300 rounded-lg text-sm">
+                                    <option>15 minutes</option>
+                                    <option selected>30 minutes</option>
+                                    <option>1 hour</option>
+                                    <option>2 hours</option>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- System Information -->
+                    <div class="bg-white rounded-lg shadow-lg p-6">
+                        <h3 class="text-lg font-semibold text-gray-800 mb-4">System Information</h3>
+                        <div class="space-y-3">
+                            <div class="flex justify-between">
+                                <span class="text-sm text-gray-600">System Version</span>
+                                <span class="text-sm font-medium text-gray-800">v2.1.0</span>
+                            </div>
+                            <div class="flex justify-between">
+                                <span class="text-sm text-gray-600">Last Updated</span>
+                                <span class="text-sm font-medium text-gray-800">Dec 15, 2024</span>
+                            </div>
+                            <div class="flex justify-between">
+                                <span class="text-sm text-gray-600">Database Status</span>
+                                <span class="text-sm font-medium text-green-600">Online</span>
+                            </div>
+                            <div class="flex justify-between">
+                                <span class="text-sm text-gray-600">Server Status</span>
+                                <span class="text-sm font-medium text-green-600">Healthy</span>
+                            </div>
+                            <div class="flex justify-between">
+                                <span class="text-sm text-gray-600">Active Users</span>
+                                <span class="text-sm font-medium text-gray-800">1,234</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Notification Settings -->
+                    <div class="bg-white rounded-lg shadow-lg p-6">
+                        <h3 class="text-lg font-semibold text-gray-800 mb-4">Notification Settings</h3>
+                        <div class="space-y-4">
+                            <div class="flex items-center justify-between">
+                                <span class="text-sm font-medium text-gray-700">New User Registration</span>
+                                <label class="relative inline-flex items-center cursor-pointer">
+                                    <input type="checkbox" class="sr-only peer" checked>
+                                    <div class="w-11 h-6 bg-gray-200 peer-focus:outline-none peer-focus:ring-4 peer-focus:ring-red-cross-blue/20 rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-red-cross-blue"></div>
+                                </label>
+                            </div>
+                            <div class="flex items-center justify-between">
+                                <span class="text-sm font-medium text-gray-700">New Donations</span>
+                                <label class="relative inline-flex items-center cursor-pointer">
+                                    <input type="checkbox" class="sr-only peer" checked>
+                                    <div class="w-11 h-6 bg-gray-200 peer-focus:outline-none peer-focus:ring-4 peer-focus:ring-red-cross-blue/20 rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-red-cross-blue"></div>
+                                </label>
+                            </div>
+                            <div class="flex items-center justify-between">
+                                <span class="text-sm font-medium text-gray-700">Event Reminders</span>
+                                <label class="relative inline-flex items-center cursor-pointer">
+                                    <input type="checkbox" class="sr-only peer" checked>
+                                    <div class="w-11 h-6 bg-gray-200 peer-focus:outline-none peer-focus:ring-4 peer-focus:ring-red-cross-blue/20 rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-red-cross-blue"></div>
+                                </label>
+                            </div>
+                            <div class="flex items-center justify-between">
+                                <span class="text-sm font-medium text-gray-700">System Alerts</span>
+                                <label class="relative inline-flex items-center cursor-pointer">
+                                    <input type="checkbox" class="sr-only peer" checked>
+                                    <div class="w-11 h-6 bg-gray-200 peer-focus:outline-none peer-focus:ring-4 peer-focus:ring-red-cross-blue/20 rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-red-cross-blue"></div>
+                                </label>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- System Actions -->
+                    <div class="bg-white rounded-lg shadow-lg p-6">
+                        <h3 class="text-lg font-semibold text-gray-800 mb-4">System Actions</h3>
+                        <div class="space-y-4">
+                            <button class="w-full bg-blue-600 text-white px-4 py-2 rounded-lg hover:bg-blue-700 transition-colors" onclick="exportSystemData()">
+                                <i class="fas fa-download mr-2"></i>Export System Data
+                            </button>
+                            <button class="w-full bg-green-600 text-white px-4 py-2 rounded-lg hover:bg-green-700 transition-colors" onclick="syncDatabase()">
+                                <i class="fas fa-sync mr-2"></i>Sync Database
+                            </button>
+                            <button class="w-full bg-yellow-600 text-white px-4 py-2 rounded-lg hover:bg-yellow-700 transition-colors" onclick="toggleMaintenanceMode()">
+                                <i class="fas fa-cog mr-2"></i>Maintenance Mode
+                            </button>
+                            <button class="w-full bg-red-600 text-white px-4 py-2 rounded-lg hover:bg-red-700 transition-colors" onclick="restartSystem()">
+                                <i class="fas fa-power-off mr-2"></i>System Restart
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </section>
+        </main>
+    </div>
+
+    <!-- Event Modal -->
+    <div id="eventModal" class="modal hidden">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3 class="text-lg font-semibold text-gray-800">Create New Event</h3>
+            </div>
+            <form id="eventForm" class="modal-body space-y-4">
+                <div>
+                    <label class="form-label">Event Title</label>
+                    <input type="text" id="eventTitle" class="form-input" required>
+                </div>
+                <div>
+                    <label class="form-label">Location</label>
+                    <input type="text" id="eventLocation" class="form-input" required>
+                </div>
+                <div>
+                    <label class="form-label">Description</label>
+                    <textarea id="eventDescription" rows="4" class="form-input" required></textarea>
+                </div>
+                <div>
+                    <label class="form-label">Status</label>
+                    <select id="eventStatus" class="form-input">
+                        <option value="upcoming">Upcoming</option>
+                        <option value="ongoing">Ongoing</option>
+                        <option value="completed">Completed</option>
+                        <option value="cancelled">Cancelled</option>
+                    </select>
+                </div>
+            </form>
+            <div class="modal-footer">
+                <button type="button" id="cancelEventBtn" class="px-4 py-2 border border-gray-300 rounded-lg text-gray-700 hover:bg-gray-50 transition-colors">
+                    Cancel
+                </button>
+                <button type="submit" form="eventForm" class="px-4 py-2 bg-red-cross-blue text-white rounded-lg hover:bg-red-cross-secondary-blue transition-colors">
+                    Save Event
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- User Modal -->
+    <div id="userModal" class="modal hidden">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3 class="text-lg font-semibold text-gray-800">Add New User</h3>
+            </div>
+            <form id="userForm" class="modal-body space-y-4">
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                    <div>
+                        <label class="form-label">First Name</label>
+                        <input type="text" id="userFirstName" class="form-input" required>
+                    </div>
+                    <div>
+                        <label class="form-label">Last Name</label>
+                        <input type="text" id="userLastName" class="form-input" required>
+                    </div>
+                </div>
+                <div>
+                    <label class="form-label">Email</label>
+                    <input type="email" id="userEmail" class="form-input" required>
+                </div>
+                <div>
+                    <label class="form-label">Role</label>
+                    <select id="userRole" class="form-input">
+                        <option value="member">Member</option>
+                        <option value="volunteer">Volunteer</option>
+                        <option value="staff">Staff</option>
+                        <option value="admin">Admin</option>
+                    </select>
+                </div>
+                <div>
+                    <label class="form-label">Status</label>
+                    <select id="userStatus" class="form-input">
+                        <option value="active">Active</option>
+                        <option value="inactive">Inactive</option>
+                        <option value="pending">Pending</option>
+                    </select>
+                </div>
+            </form>
+            <div class="modal-footer">
+                <button type="button" id="cancelUserBtn" class="px-4 py-2 border border-gray-300 rounded-lg text-gray-700 hover:bg-gray-50 transition-colors">
+                    Cancel
+                </button>
+                <button type="submit" form="userForm" class="px-4 py-2 bg-red-cross-blue text-white rounded-lg hover:bg-red-cross-secondary-blue transition-colors">
+                    Save User
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Volunteer/Staff Modal -->
+    <div id="volunteerModal" class="modal hidden">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3 class="text-lg font-semibold text-gray-800">Add New Volunteer/Staff</h3>
+            </div>
+            <form id="volunteerForm" class="modal-body space-y-6">
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                    <div>
+                        <label class="block text-sm font-semibold text-gray-700 mb-2">Full Name</label>
+                        <input type="text" id="volunteerFullName" class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent" placeholder="Enter full name" required>
+                    </div>
+                    <div>
+                        <label class="block text-sm font-semibold text-gray-700 mb-2">Contact Number</label>
+                        <input type="tel" id="volunteerContact" class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent" placeholder="Enter contact number" required>
+                    </div>
+                </div>
+                
+                <div>
+                    <label class="block text-sm font-semibold text-gray-700 mb-2">Email Address</label>
+                    <input type="email" id="volunteerEmail" class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent" placeholder="Enter email address" required>
+                </div>
+                
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                    <div>
+                        <label class="block text-sm font-semibold text-gray-700 mb-2">Emergency Contact</label>
+                        <input type="text" id="volunteerEmergencyContact" class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent" placeholder="Emergency contact name and number" required>
+                    </div>
+                    <div>
+                        <label class="block text-sm font-semibold text-gray-700 mb-2">Skills/Role</label>
+                        <select id="volunteerSkills" class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent">
+                            <option value="">Select skills/role</option>
+                            <option value="medical">Medical Professional</option>
+                            <option value="logistics">Logistics Coordinator</option>
+                            <option value="communications">Communications</option>
+                            <option value="administration">Administration</option>
+                            <option value="general">General Volunteer</option>
+                        </select>
+                    </div>
+                </div>
+                
+                <div>
+                    <label class="block text-sm font-semibold text-gray-700 mb-2">Availability</label>
+                    <select id="volunteerAvailability" class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent">
+                        <option value="">Select availability</option>
+                        <option value="full-time">Full-time</option>
+                        <option value="part-time">Part-time</option>
+                        <option value="weekends">Weekends only</option>
+                        <option value="emergency">Emergency response only</option>
+                    </select>
+                </div>
+            </form>
+            <div class="modal-footer">
+                <button type="button" id="cancelVolunteerBtn" class="px-6 py-3 bg-gray-200 text-gray-700 rounded-lg font-semibold hover:bg-gray-300 transition-colors">
+                    Cancel
+                </button>
+                <button type="submit" form="volunteerForm" class="px-6 py-3 bg-blue-600 text-white rounded-lg font-semibold hover:bg-blue-700 transition-colors">
+                    Save Volunteer/Staff
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+    <script src="admin.js"></script>
+</body>
+</html>

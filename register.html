@@ -1,0 +1,403 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Register - Red Cross Philippines</title>
+    <meta name="description" content="Join the Philippine Red Cross by providing your personal information securely. Step 1 of 3: Create your Red Cross profile.">
+    <link rel="icon" type="image/x-icon" href="favicon.ico">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        'red-cross-blue': '#002888',
+                        'red-cross-red': '#E3000E',
+                        'red-cross-light-blue': '#e6f0ff',
+                        'red-cross-secondary-blue': '#1a4ba8'
+                    },
+                    fontFamily: {
+                        'inter': ['Inter', 'sans-serif']
+                    }
+                }
+            }
+        }
+    </script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body class="min-h-screen bg-gray-50">
+    <!-- Navigation -->
+    <nav class="bg-white shadow-lg fixed top-0 left-0 right-0 z-50">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between items-center h-16">
+                <!-- Logo -->
+                <div class="flex items-center space-x-3">
+                    <img src="https://redcross.org.ph/wp-content/themes/yootheme/cache/Logo-2x2-1-03f043e8.png" alt="Red Cross Philippines Logo" class="w-10 h-10">
+                    <span class="text-xl font-bold text-red-cross-blue">
+                        Red Cross Philippines
+                    </span>
+                </div>
+
+                <!-- Navigation Links -->
+                <div class="hidden md:flex space-x-8">
+                    <a href="index.html" class="text-gray-600 hover:text-red-cross-blue hover:bg-gray-100 px-3 py-2 rounded-md text-sm font-medium transition-colors duration-200">
+                        Home
+                    </a>
+                    <a href="login.html" class="text-gray-600 hover:text-red-cross-blue hover:bg-gray-100 px-3 py-2 rounded-md text-sm font-medium transition-colors duration-200">
+                        Login
+                    </a>
+                    <a href="register.html" class="bg-red-cross-light-blue text-red-cross-blue px-3 py-2 rounded-md text-sm font-medium transition-colors duration-200">
+                        Register
+                    </a>
+                </div>
+
+                <!-- Mobile menu button -->
+                <div class="md:hidden">
+                    <button type="button" class="text-gray-600 hover:text-red-cross-blue focus:outline-none focus:text-red-cross-blue" onclick="toggleMobileMenu()">
+                        <i class="fas fa-bars text-xl"></i>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Main Content -->
+    <div class="pt-16 min-h-screen bg-gray-50">
+        <div class="max-w-4xl mx-auto px-4 py-8">
+            <!-- Step Indicator -->
+            <div class="flex justify-center mb-8">
+                <div class="flex items-center space-x-8">
+                    <div class="flex items-center space-x-3">
+                        <div class="w-10 h-10 bg-red-cross-blue text-white rounded-full flex items-center justify-center font-semibold">
+                            1
+                        </div>
+                        <span class="text-red-cross-blue font-medium">Registration</span>
+                    </div>
+                    <div class="w-16 h-0.5 bg-gray-300"></div>
+                    <div class="flex items-center space-x-3">
+                        <div class="w-10 h-10 bg-gray-300 text-gray-600 rounded-full flex items-center justify-center font-semibold">
+                            2
+                        </div>
+                        <span class="text-gray-600">Submission</span>
+                    </div>
+                    <div class="w-16 h-0.5 bg-gray-300"></div>
+                    <div class="flex items-center space-x-3">
+                        <div class="w-10 h-10 bg-gray-300 text-gray-600 rounded-full flex items-center justify-center font-semibold">
+                            3
+                        </div>
+                        <span class="text-gray-600">Payment</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Form Container -->
+            <div class="card">
+                <div class="text-center mb-8">
+                    <h2 class="text-3xl font-bold text-red-cross-blue mb-4">
+                        Create Your Red Cross Profile
+                    </h2>
+                    <p class="text-gray-600">
+                        Step 1 of 3: Join the Philippine Red Cross by providing your personal information securely.
+                    </p>
+                </div>
+
+                <!-- QR Code Option -->
+                <div class="mb-8 p-6 bg-blue-50 rounded-lg border-2 border-dashed border-blue-200">
+                    <div class="text-center">
+                        <i class="fas fa-qrcode text-4xl text-blue-600 mb-4"></i>
+                        <h3 class="text-xl font-semibold text-gray-800 mb-2">
+                            National ID QR Code
+                        </h3>
+                        <p class="text-gray-600 mb-4">
+                            Scan your National ID QR code to automatically extract and fill your personal information.
+                        </p>
+                        <div class="flex justify-center">
+                            <button
+                                type="button"
+                                onclick="openQRScanner()"
+                                class="bg-blue-600 text-white px-6 py-3 rounded-lg hover:bg-blue-700 transition-colors duration-200"
+                            >
+                                <i class="fas fa-camera mr-2"></i>
+                                Scan National ID QR Code
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Success Message -->
+                <div id="qrSuccessMessage" class="mb-6 p-4 bg-green-100 border border-green-400 text-green-700 rounded-lg flex items-center hidden">
+                    <i class="fas fa-check-circle mr-3"></i>
+                    <span class="font-medium">Data imported from National ID.</span>
+                </div>
+
+
+                <div class="form-container" style="max-width: 800px; margin: 0 auto; background: #ffffff; padding: 30px; border-radius: 8px; box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);">
+                    <form id="registerForm" class="space-y-8">
+                    <!-- Personal Information -->
+                    <div>
+                        <div class="section-header">Additional Personal Information</div>
+                        
+                        <div class="form-grid">
+                            <div class="field-group">
+                                <label for="surname" class="required">Surname (Last Name)</label>
+                                <input
+                                    type="text"
+                                    id="surname"
+                                    name="surname"
+                                    class="form-input"
+                                    required
+                                />
+                                <p id="surnameError" class="form-error hidden"></p>
+                            </div>
+
+                            <div class="field-group">
+                                <label for="firstName" class="required">First Name</label>
+                                <input
+                                    type="text"
+                                    id="firstName"
+                                    name="firstName"
+                                    class="form-input"
+                                    required
+                                />
+                                <p id="firstNameError" class="form-error hidden"></p>
+                            </div>
+
+                            <div class="field-group">
+                                <label for="middleName">Middle Name</label>
+                                <input
+                                    type="text"
+                                    id="middleName"
+                                    name="middleName"
+                                    class="form-input"
+                                />
+                            </div>
+
+                            <div class="field-group">
+                                <label for="age" class="required">Age</label>
+                                <input
+                                    type="number"
+                                    id="age"
+                                    name="age"
+                                    min="18"
+                                    max="120"
+                                    class="form-input"
+                                    required
+                                />
+                                <p id="ageError" class="form-error hidden"></p>
+                            </div>
+
+                            <div class="field-group">
+                                <label for="sex" class="required">Sex</label>
+                                <select
+                                    id="sex"
+                                    name="sex"
+                                    class="form-input"
+                                    required
+                                >
+                                    <option value="" disabled selected>Select Sex</option>
+                                    <option value="male">Male</option>
+                                    <option value="female">Female</option>
+                                </select>
+                                <p id="sexError" class="form-error hidden"></p>
+                            </div>
+
+                            <div class="field-group">
+                                <label for="birthdate" class="required">Birthdate</label>
+                                <input
+                                    type="date"
+                                    id="birthdate"
+                                    name="birthdate"
+                                    class="form-input"
+                                    placeholder="mm/dd/yyyy"
+                                    required
+                                />
+                                <p id="birthdateError" class="form-error hidden"></p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Contact Information -->
+                    <div>
+                        <div class="section-header">Contact Information</div>
+                        
+                        <div class="form-grid">
+                            <div class="field-group full-width">
+                                <label for="address" class="required">Complete Address</label>
+                                <textarea
+                                    id="address"
+                                    name="address"
+                                    rows="3"
+                                    class="form-input"
+                                    placeholder="Street, Barangay, City/Province"
+                                    required
+                                ></textarea>
+                                <p id="addressError" class="form-error hidden"></p>
+                            </div>
+                            
+                            <div class="field-group">
+                                <label for="mobile" class="required">Mobile Number</label>
+                                <input
+                                    type="tel"
+                                    id="mobile"
+                                    name="mobile"
+                                    class="form-input"
+                                    placeholder="+63 9XX XXX XXXX"
+                                    required
+                                />
+                                <p id="mobileError" class="form-error hidden"></p>
+                            </div>
+
+                            <div class="field-group">
+                                <label for="email" class="required">Email Address</label>
+                                <input
+                                    type="email"
+                                    id="email"
+                                    name="email"
+                                    class="form-input"
+                                    required
+                                />
+                                <p id="emailError" class="form-error hidden"></p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Additional Information -->
+                    <div>
+                        <div class="section-header">Additional Information</div>
+                        
+                        <div class="form-grid">
+                            <div class="field-group">
+                                <label for="bloodType" class="required">Blood Type</label>
+                                <select
+                                    id="bloodType"
+                                    name="bloodType"
+                                    class="form-input"
+                                    required
+                                >
+                                    <option value="" disabled selected>Select Blood Type</option>
+                                    <option value="A+">A+</option>
+                                    <option value="A-">A-</option>
+                                    <option value="B+">B+</option>
+                                    <option value="B-">B-</option>
+                                    <option value="AB+">AB+</option>
+                                    <option value="AB-">AB-</option>
+                                    <option value="O+">O+</option>
+                                    <option value="O-">O-</option>
+                                </select>
+                                <p id="bloodTypeError" class="form-error hidden"></p>
+                            </div>
+
+                            <div class="field-group">
+                                <label for="maritalStatus">Marital Status</label>
+                                <select
+                                    id="maritalStatus"
+                                    name="maritalStatus"
+                                    class="form-input"
+                                >
+                                    <option value="" disabled selected>Select Marital Status</option>
+                                    <option value="single">Single</option>
+                                    <option value="married">Married</option>
+                                    <option value="widowed">Widowed</option>
+                                    <option value="divorced">Divorced</option>
+                                    <option value="separated">Separated</option>
+                                </select>
+                            </div>
+
+                            <div class="field-group full-width">
+                                <label for="occupation">Occupation</label>
+                                <input
+                                    type="text"
+                                    id="occupation"
+                                    name="occupation"
+                                    class="form-input"
+                                    placeholder="Enter your occupation"
+                                />
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Security Features -->
+                    <div class="p-6 bg-red-cross-light-blue rounded-lg">
+                        <h3 class="font-semibold text-red-cross-blue mb-4">Your Data is Protected</h3>
+                        <div class="grid md:grid-cols-2 gap-4">
+                            <div class="flex items-center space-x-3">
+                                <i class="fas fa-shield-alt text-red-cross-blue"></i>
+                                <span class="text-sm text-gray-700">256-bit SSL encryption protects all personal data</span>
+                            </div>
+                            <div class="flex items-center space-x-3">
+                                <i class="fas fa-lock text-red-cross-blue"></i>
+                                <span class="text-sm text-gray-700">Compliant with Philippine Data Privacy Act (RA 10173)</span>
+                            </div>
+                            <div class="flex items-center space-x-3">
+                                <i class="fas fa-user-shield text-red-cross-blue"></i>
+                                <span class="text-sm text-gray-700">Zero data sharing with third parties without consent</span>
+                            </div>
+                            <div class="flex items-center space-x-3">
+                                <i class="fas fa-server text-red-cross-blue"></i>
+                                <span class="text-sm text-gray-700">Secure servers with 24/7 monitoring</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <button
+                        type="submit"
+                        id="registerBtn"
+                        class="bg-blue-600 text-white px-6 py-3 rounded-lg font-semibold hover:bg-blue-700 transition-all duration-300 transform hover:-translate-y-1 hover:shadow-lg w-full"
+                    >
+                        <i class="fas fa-arrow-right mr-2"></i>
+                        Continue to Profile Submission
+                    </button>
+                    </form>
+                </div>
+            </div>
+
+            <!-- Footer CTA -->
+            <div class="mt-8 text-center">
+                <p class="text-gray-600">
+                    Questions about registration? Contact our membership team at 
+                    <a href="mailto:membership@redcross.org.ph" class="text-red-cross-blue hover:underline">
+                        membership@redcross.org.ph
+                    </a> 
+                    or call 
+                    <a href="tel:+63285270000" class="text-red-cross-blue hover:underline">
+                        (02) 8527-0000
+                    </a>
+                </p>
+            </div>
+        </div>
+    </div>
+
+    <!-- QR Scanner Modal -->
+    <div id="qrScannerModal" class="fixed inset-0 bg-black bg-opacity-50 z-50 hidden">
+        <div class="flex items-center justify-center min-h-screen p-4">
+            <div class="bg-white rounded-lg max-w-md w-full p-6">
+                <div class="text-center">
+                    <h3 class="text-lg font-semibold text-gray-800 mb-4">QR Code Scanner</h3>
+                    <div id="qrScanner" class="w-full h-64 bg-gray-200 rounded-lg flex items-center justify-center mb-4">
+                        <div class="text-center">
+                            <i class="fas fa-qrcode text-4xl text-gray-400 mb-2"></i>
+                            <p class="text-gray-600">Camera access required</p>
+                            <p class="text-sm text-gray-500">Click "Start Camera" to begin scanning</p>
+                        </div>
+                    </div>
+                    <div class="flex gap-3">
+                        <button onclick="startQRScanner()" class="bg-blue-600 text-white px-4 py-2 rounded-lg hover:bg-blue-700 transition-colors duration-200">
+                            <i class="fas fa-camera mr-2"></i>
+                            Start Camera
+                        </button>
+                        <button onclick="closeQRScanner()" class="bg-gray-600 text-white px-4 py-2 rounded-lg hover:bg-gray-700 transition-colors duration-200">
+                            <i class="fas fa-times mr-2"></i>
+                            Cancel
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>

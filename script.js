@@ -47,7 +47,7 @@ const Login = {
     if (foundUser) {
       SessionManager.createSession(foundUser);
       alert(`Welcome, ${foundUser.firstName}! Redirecting...`);
-      window.location.href = "index.html"; // or dashboard.html
+      window.location.href = "index.html"; // normal user dashboard
       return;
     }
 
@@ -99,21 +99,38 @@ const Registration = {
       return;
     }
 
-    // Save user in localStorage
-    const users = JSON.parse(localStorage.getItem("registeredUsers") || "[]");
-    const exists = users.find((u) => u.email === formData.email);
+    // Save user temporarily until payment is done
+    localStorage.setItem("pendingPaymentUser", JSON.stringify(formData));
 
-    if (exists) {
-      alert("This email is already registered. Please log in.");
+    alert("Registration successful! Redirecting to payment...");
+    window.location.href = "payment.html";
+  }
+};
+
+// ===============================
+// Payment Handler
+// ===============================
+const Payment = {
+  handleSubmit: (event) => {
+    event.preventDefault();
+
+    const pendingUser = JSON.parse(localStorage.getItem("pendingPaymentUser"));
+
+    if (pendingUser) {
+      // Save to registered users
+      const users = JSON.parse(localStorage.getItem("registeredUsers") || "[]");
+      users.push(pendingUser);
+      localStorage.setItem("registeredUsers", JSON.stringify(users));
+
+      // Clear pending
+      localStorage.removeItem("pendingPaymentUser");
+
+      alert("✅ Payment successful! You can now log in.");
       window.location.href = "login.html";
-      return;
+    } else {
+      alert("⚠️ No pending registration found. Please register first.");
+      window.location.href = "register.html";
     }
-
-    users.push(formData);
-    localStorage.setItem("registeredUsers", JSON.stringify(users));
-
-    alert("Registration successful! Redirecting to login...");
-    window.location.href = "login.html";
   }
 };
 
@@ -129,6 +146,11 @@ document.addEventListener("DOMContentLoaded", () => {
   const registerForm = document.getElementById("registerForm");
   if (registerForm) {
     registerForm.addEventListener("submit", Registration.handleSubmit);
+  }
+
+  const paymentForm = document.getElementById("paymentForm");
+  if (paymentForm) {
+    paymentForm.addEventListener("submit", Payment.handleSubmit);
   }
 
   const logoutBtn = document.getElementById("logoutBtn");
